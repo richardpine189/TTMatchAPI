@@ -31,6 +31,12 @@ dependencies {
     implementation("org.junit.jupiter:junit-jupiter:5.8.1")
     implementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
+    implementation("io.ktor:ktor-client-core:$ktor_version")
+    implementation("io.ktor:ktor-client-cio:$ktor_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    
 }

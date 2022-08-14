@@ -1,6 +1,8 @@
 package com.team8
 
 import com.team8.services.MatchmakingService
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
@@ -10,23 +12,19 @@ import kotlin.test.assertNotNull
 
 class matchmakingServiceShould {
 
+
     @Test
-    fun `return opponent name when requested`()
-    {
-        // Arange
+    fun `return opponent name when requested`() = runTest {
+        // Arrange
         val matchmakingService = MatchmakingService("https://fathomless-fortress-23469.herokuapp.com")
 
         // Act
         val responseJson = matchmakingService.GetOpponent("Theo")
-
-        val responseUser = Json.decodeFromString<List<User>>(responseJson)
-
+        println(responseJson)
+        val responseUser = Json.decodeFromString<String>(responseJson)
+        println(responseUser)
         // Assert
         assertNotNull(responseUser)
     }
 }
 
-@Serializable
-data class User(val id: Long, var name: String, var email: String) {
-    var coin = 0
-}
