@@ -20,9 +20,7 @@ class matchmakingServiceShould {
 
         // Act
         val responseJson = matchmakingService.GetOpponent("Theo")
-        println(responseJson)
         val responseUser = Json.decodeFromString<String>(responseJson)
-        println(responseUser)
         // Assert
         assertNotNull(responseUser)
     }

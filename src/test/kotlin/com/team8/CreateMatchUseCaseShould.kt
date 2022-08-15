@@ -2,6 +2,7 @@ package com.team8
 
 import com.team8.interfaces.IMakeMatch
 import com.team8.useCases.CreateMatchUseCase
+import kotlinx.coroutines.test.runTest
 import org.junit.BeforeClass
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -24,19 +25,18 @@ class CreateMatchUseCaseShould {
 
         @BeforeClass
         @JvmStatic
-        fun `Setup`() {
+        fun `Setup`() = runTest{
             // Arrange
             challenger = "Ricardo"
             opponent = "Theo"
             matchmakingService = mock()
-            whenever(matchmakingService.GetOpponent()).thenReturn(opponent)
+            whenever(matchmakingService.GetOpponent(challenger)).thenReturn(opponent)
             createMatchUseCase = CreateMatchUseCase(matchmakingService)
         }
     }
 
     @Test
-    fun `return challenger name inside match`()
-    {
+    fun `return challenger name inside match`() = runTest{
         // Act
         val resultMatch = createMatchUseCase(challenger)
 
@@ -45,8 +45,7 @@ class CreateMatchUseCaseShould {
     }
 
     @Test
-    fun `return opponent name inside match`()
-    {
+    fun `return opponent name inside match`() = runTest{
         // Act
         val resultMatch = createMatchUseCase(challenger)
 

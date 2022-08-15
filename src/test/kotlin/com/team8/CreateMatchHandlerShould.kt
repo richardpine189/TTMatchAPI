@@ -3,6 +3,7 @@ package com.team8
 import com.team8.domain.Match
 import com.team8.handlers.CreateMatchHandler
 import com.team8.interfaces.ICreateMatchUseCase
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
@@ -11,7 +12,7 @@ import kotlin.test.assertEquals
 class CreateMatchHandlerShould {
 
     @Test
-    fun `return a match when a new match is requested`() {
+    fun `return a match when a new match is requested`() = runTest{
 
         // Arrange
         val challenger = "Ricardo"
@@ -27,4 +28,5 @@ class CreateMatchHandlerShould {
         // Assert
         assertEquals(resultMatch, expectedMatch)
     }
+
 }
