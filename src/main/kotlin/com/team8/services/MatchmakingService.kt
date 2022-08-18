@@ -7,7 +7,7 @@ import io.ktor.client.statement.*
 class MatchmakingService(val PATH : String) : IMakeMatch {
     override suspend fun GetOpponent(challengerId : String) : String {
         val client = HttpClient()
-        val response = client.get("$PATH/user/getOpponent/$challengerId")
+        val response = client.get("$PATH/getOpponent/$challengerId")
         return response.bodyAsText()
     }
 }
