@@ -3,11 +3,12 @@ package com.team8.useCases
 import com.team8.interfaces.ICreateMatchUseCase
 import com.team8.domain.Match
 import com.team8.interfaces.IMakeMatch
+import com.team8.interfaces.ISaveMatch
 import kotlinx.coroutines.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
-class CreateMatchUseCase(val matchmakingService: IMakeMatch) : ICreateMatchUseCase {
+class CreateMatchUseCase(val matchmakingService: IMakeMatch, val saveMath : ISaveMatch) : ICreateMatchUseCase {
 
     override suspend operator fun invoke(challenger: String): Match {
         val opponent = matchmakingService.GetOpponent(challenger)

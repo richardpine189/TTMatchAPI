@@ -1,4 +1,4 @@
-package com.team8
+package com.team8.CreateMatch
 
 import com.team8.interfaces.IMakeMatch
 import com.team8.useCases.CreateMatchUseCase
