@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.team8.matchmakingServiceShould" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-08-15T20:53:11" hostname="DESKTOP-IN1OAHD" time="2.216">
-  <properties/>
-  <testcase name="return opponent name when requested" classname="com.team8.matchmakingServiceShould" time="2.216"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

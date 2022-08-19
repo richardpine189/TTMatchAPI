@@ -6,4 +6,9 @@ import com.team8.repository.MatchRepository
 
 class UpdateMatchUseCase(repository: IMatchRepository) : IUpdateMatchUseCase{
 
+
+    fun Invoke()
+    {
+
+    }
 }

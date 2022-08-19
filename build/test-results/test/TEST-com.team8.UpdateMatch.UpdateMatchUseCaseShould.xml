@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.team8.UpdateMatch.UpdateMatchUseCaseShould" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-08-19T15:18:12" hostname="RICARDOUPINO-NO" time="0.012">
+  <properties/>
+  <testcase name="Change user turn when the answers are complete" classname="com.team8.UpdateMatch.UpdateMatchUseCaseShould" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

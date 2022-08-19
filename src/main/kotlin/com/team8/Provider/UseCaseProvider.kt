@@ -13,7 +13,7 @@ object UseCaseProvider {
         SaveMatchUseCase(RepositoryProvider.getRepository)
     }
 
-    val getUpdateMath by lazy{
+    val getUpdateMatch by lazy{
         UpdateMatchUseCase(RepositoryProvider.getRepository)
     }
 

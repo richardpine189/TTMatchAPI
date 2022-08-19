@@ -1,6 +1,7 @@
 package com.team8.CreateMatch
 
-import com.team8.interfaces.IMakeMatch
+import com.team8.interfaces.IMakeMatchService
+import com.team8.interfaces.ISaveMatchUseCase
 import com.team8.useCases.CreateMatchUseCase
 import kotlinx.coroutines.test.runTest
 import org.junit.BeforeClass
@@ -18,8 +19,10 @@ class CreateMatchUseCaseShould {
         @JvmStatic
         private lateinit var opponent : String
         @JvmStatic
-        private lateinit var matchmakingService: IMakeMatch
+        private lateinit var matchmakingService: IMakeMatchService
 
+        @JvmStatic
+        private lateinit var savematchUseCase: ISaveMatchUseCase
         @JvmStatic
         private lateinit var createMatchUseCase: CreateMatchUseCase
 
@@ -30,8 +33,9 @@ class CreateMatchUseCaseShould {
             challenger = "Ricardo"
             opponent = "Theo"
             matchmakingService = mock()
+            savematchUseCase = mock()
             whenever(matchmakingService.GetOpponent(challenger)).thenReturn(opponent)
-            createMatchUseCase = CreateMatchUseCase(matchmakingService)
+            createMatchUseCase = CreateMatchUseCase(matchmakingService, savematchUseCase)
         }
     }
 
@@ -51,5 +55,11 @@ class CreateMatchUseCaseShould {
 
         // Assert
         assertEquals(opponent, resultMatch.opponent)
+    }
+
+    @Test
+    fun `save match when its created`()
+    {
+
     }
 }

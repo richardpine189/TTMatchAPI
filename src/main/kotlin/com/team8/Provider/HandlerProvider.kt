@@ -10,6 +10,6 @@ object HandlerProvider {
     }
 
     val updateMatch by lazy{
-        UpdateMatchHandler(UseCaseProvider.getUpdateMath)
+        UpdateMatchHandler(UseCaseProvider.getUpdateMatch, UseCaseProvider.getSaveMatch)
     }
 }
