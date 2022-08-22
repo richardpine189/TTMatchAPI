@@ -5,10 +5,23 @@ import kotlin.math.round
 
 
 @Serializable
-class Match(val challenger: String, val opponent: String) {
+class Match(val challenger: String, val opponent: String, var id : Int = -1) {
 
+    // Estos tres métodos públicos (setCategories, setResults y setAnswers) deberían ser privados y ser llamados desde un método único que reciba un RoundDTO
+    // aparte de llamar él a updateRoundStatus
 
-    fun SetAnswers(answers: Array<String>) {
+    fun setCategories(categories : Array<String>) {
+        rounds[currentRound].categoryNames = categories
+    }
+
+    fun setResults(results : Array<Boolean>) {
+        if (matchTurn == MatchTurn.Challenger)
+            rounds[currentRound].challengerResults = results
+        else
+            rounds[currentRound].opponentResults = results
+    }
+
+    fun setAnswers(answers: Array<String>) {
         if (matchTurn == MatchTurn.Challenger)
             rounds[currentRound].challengerAnswers = answers
         else
@@ -24,11 +37,11 @@ class Match(val challenger: String, val opponent: String) {
         }
         if(rounds[currentRound].roundStatus == RoundStatus.NotStarted){
             rounds[currentRound].roundStatus = RoundStatus.Unfinished
-            SwitchPlayerTurn()
+            switchPlayerTurn()
         }
     }
 
-    private fun SwitchPlayerTurn()
+    private fun switchPlayerTurn()
     {
         if(matchTurn == MatchTurn.Opponent)
             matchTurn = MatchTurn.Challenger

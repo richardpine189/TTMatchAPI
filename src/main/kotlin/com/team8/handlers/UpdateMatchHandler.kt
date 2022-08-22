@@ -1,22 +1,33 @@
 package com.team8.handlers
 
 import com.team8.domain.Round
+import com.team8.domain.RoundDTO
+import com.team8.interfaces.IHandler
 import com.team8.interfaces.ISaveMatchUseCase
 import com.team8.interfaces.IUpdateMatchUseCase
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.routing.*
+import io.ktor.util.pipeline.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlin.text.get
 
-class UpdateMatchHandler(val updateMatchUseCase : IUpdateMatchUseCase, val saveMatchUseCase: ISaveMatchUseCase) {
+class UpdateMatchHandler(val updateMatchUseCase : IUpdateMatchUseCase, val saveMatchUseCase: ISaveMatchUseCase) : IHandler {
 
-    //Recibir match con categorias
-    val id: Int = 0
-    val round = Round()
-    fun holaMundo()
-    {
-        updateMatchUseCase(id, round)
+    override fun routing(a: Application) {
+        a.routing {
+            route("/updateMatch") {
+                post { updateMatch() }
+            }
+        }
     }
 
-    //UpdateMatchStatus responsabilidad del match
+    suspend fun PipelineContext<Unit, ApplicationCall>.updateMatch(){
+        val parameters = call.receiveText()
+        println(parameters)
+        val roundDTO = Json.decodeFromString<RoundDTO>(parameters)
+        updateMatchUseCase(roundDTO)
+    }
 
-
-
-    //SaveMatch en memoria
 }

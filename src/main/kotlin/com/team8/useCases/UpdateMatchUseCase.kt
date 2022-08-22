@@ -1,17 +1,21 @@
 package com.team8.useCases
 
-import com.team8.domain.Round
+import com.team8.domain.RoundDTO
 import com.team8.interfaces.IMatchRepository
 import com.team8.interfaces.IUpdateMatchUseCase
-import com.team8.repository.MatchRepository
 
 class UpdateMatchUseCase(private val repository: IMatchRepository) : IUpdateMatchUseCase{
-    override operator fun invoke(id : Int, round: Round)
+    override operator fun invoke(round: RoundDTO)
     {
         //obtener match
-        val match = repository.getMatch(id)
+        val match = repository.getMatch(round.id)
+
         //setearle cambios
+        match.setCategories(round.categories)
+        match.setResults(round.results)
+        match.setAnswers(round.answers)
 
         //guardar
+        repository.saveMatch(match)
     }
 }

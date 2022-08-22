@@ -22,7 +22,7 @@ class MatchShould {
     {
 
         val match = SetNewMatch()
-        match.SetAnswers(answers = arrayOf("","",""))
+        match.setAnswers(answers = arrayOf("","",""))
         val matchTurn = match.matchTurn
         //Assert
         assertEquals(matchTurn, MatchTurn.Opponent)
@@ -33,7 +33,7 @@ class MatchShould {
     {
         val answers = arrayOf<String>()
         val match = SetNewMatch()
-        match.SetAnswers(answers)
+        match.setAnswers(answers)
 
         //
         assertEquals(match.rounds[0].challengerAnswers, answers)
@@ -44,8 +44,8 @@ class MatchShould {
     {
         val answers = arrayOf<String>()
         val match = SetNewMatch()
-        match.SetAnswers(answers)
-        match.SetAnswers(answers)
+        match.setAnswers(answers)
+        match.setAnswers(answers)
 
         //
         assertEquals(match.rounds[0].opponentAnswers, answers)
@@ -56,9 +56,8 @@ class MatchShould {
     {
         var checkAnswer = true
         val answers = arrayOf<String>("Hola","Theo","Que","Tal","Estas")
-        val answers2 = arrayOf<String>()
         val match = SetNewMatch()
-        match.SetAnswers(answers)
+        match.setAnswers(answers)
 
         for(i in 0..4)
         {
@@ -75,8 +74,8 @@ class MatchShould {
         val answers = arrayOf<String>()
         val answers2 = arrayOf<String>("Hola","Theo","Que","Tal","Estas")
         val match = SetNewMatch()
-        match.SetAnswers(answers)
-        match.SetAnswers(answers2)
+        match.setAnswers(answers)
+        match.setAnswers(answers2)
         for(i in 0..4)
         {
             if(match.rounds[0].opponentAnswers[i] != answers2[i])
@@ -91,9 +90,49 @@ class MatchShould {
         val roundExpectedIndex = 1 // It`s the second round
         val answers = arrayOf<String>()
         val match = SetNewMatch()
-        match.SetAnswers(answers)
-        match.SetAnswers(answers)
+        match.setAnswers(answers)
+        match.setAnswers(answers)
         assertEquals(roundExpectedIndex, match.currentRound)
+    }
+
+    @Test
+    fun `Set categories to round`()
+    {
+        var result = true
+        val categories = arrayOf<String>("Hola","Theo","Que","Tal","Estas")
+        val match = SetNewMatch()
+
+        match.setCategories(categories)
+
+        for(i in 0..4)
+        {
+            if(match.rounds[0].categoryNames[i] != categories[i])
+            {
+                result = false
+            }
+        }
+
+        assertTrue(result)
+    }
+
+    @Test
+    fun `Set answerResults to round`()
+    {
+        var result = true
+        val answerResults = arrayOf<Boolean>(true, false, true, true, false)
+        val match = SetNewMatch()
+
+        match.setResults(answerResults)
+
+        for(i in 0..4)
+        {
+            if(match.rounds[0].challengerResults[i] != answerResults[i])
+            {
+                result = false
+            }
+        }
+
+        assertTrue(result)
     }
 
     fun SetNewMatch() : Match
@@ -101,5 +140,4 @@ class MatchShould {
         val match = Match("Theo", "Ricardo")
         return match
     }
-
 }
