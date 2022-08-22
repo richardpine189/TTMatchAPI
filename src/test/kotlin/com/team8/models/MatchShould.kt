@@ -1,17 +1,12 @@
-package com.team8.UpdateMatch
+package com.team8.models
 
 import com.team8.domain.Match
 import com.team8.domain.MatchTurn
 import com.team8.domain.RoundStatus
-import com.team8.interfaces.IMatchRepository
-import com.team8.interfaces.IUpdateMatchUseCase
 import junit.framework.TestCase.*
 import org.junit.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import kotlin.test.assertNotNull
 
-class UpdateMatchUseCaseShould {
+class MatchShould {
 
     @Test
     fun `Check if the round status is finished in the given match`()
@@ -57,20 +52,48 @@ class UpdateMatchUseCaseShould {
     }
 
     @Test
-    fun `Set the answers depending of the matchturn`()
+    fun `Set the challenger answers depending of the matchturn`()
     {
-        val answers = arrayOf<String>()
+        var checkAnswer = true
+        val answers = arrayOf<String>("Hola","Theo","Que","Tal","Estas")
         val answers2 = arrayOf<String>()
         val match = SetNewMatch()
         match.SetAnswers(answers)
 
-        assertEquals(answers,match.rounds[0].challengerAnswers)
+        for(i in 0..4)
+        {
+            if(match.rounds[0].challengerAnswers[i] != answers[i])
+                checkAnswer = false
+        }
 
+        assertEquals(true, checkAnswer)
+    }
+    @Test
+    fun `Set the challenger opponent depending of the matchturn`()
+    {
+        var checkAnswer = true
+        val answers = arrayOf<String>()
+        val answers2 = arrayOf<String>("Hola","Theo","Que","Tal","Estas")
+        val match = SetNewMatch()
+        match.SetAnswers(answers)
         match.SetAnswers(answers2)
+        for(i in 0..4)
+        {
+            if(match.rounds[0].opponentAnswers[i] != answers2[i])
+                checkAnswer = false
+        }
 
-        assertEquals(answers2,match.rounds[0].opponentAnswers)
-
-    //assertNull(match.rounds[0].opponentAnswers[0])
+        assertEquals(true, checkAnswer)
+    }
+    @Test
+    fun `Move to the next round when the previous its finished`()
+    {
+        val roundExpectedIndex = 1 // It`s the second round
+        val answers = arrayOf<String>()
+        val match = SetNewMatch()
+        match.SetAnswers(answers)
+        match.SetAnswers(answers)
+        assertEquals(roundExpectedIndex, match.currentRound)
     }
 
     fun SetNewMatch() : Match
