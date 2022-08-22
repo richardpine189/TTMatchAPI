@@ -5,17 +5,30 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class Match(val challenger: String, val opponent: String) {
-    fun SetAnswers() {
-        matchTurn = MatchTurn.Opponent
+    fun SetAnswers(answers: Array<String>) {
+
+        if(matchTurn == MatchTurn.Challenger)
+            rounds[0].challengerAnswers = answers
+        else
+            rounds[0].opponentAnswers = answers
+
+        SwitchPlayerTurn()
+    }
+
+    private fun SwitchPlayerTurn()
+    {
+        if(matchTurn == MatchTurn.Opponent)
+            matchTurn = MatchTurn.Challenger
+
+        else
+            matchTurn = MatchTurn.Opponent
     }
 
     var matchTurn = MatchTurn.Challenger
     var rounds = arrayOf<Round>(Round(), Round(), Round())
+
 }
 
-@Serializable
-class Round(){
-    var roundStatus: RoundStatus = RoundStatus.NotStarted
-}
-enum class RoundStatus {NotStarted, Unfinished, Finished}
+
+
 enum class MatchTurn {Challenger, Opponent}
