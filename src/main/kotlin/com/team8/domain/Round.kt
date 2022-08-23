@@ -1,7 +1,6 @@
 package com.team8.domain
 
 import kotlinx.serialization.Serializable
-import kotlin.reflect.jvm.internal.impl.protobuf.LazyStringArrayList
 
 @Serializable
 class Round() {
@@ -12,9 +11,36 @@ class Round() {
     var opponentAnswers : Array<String> = Array(5) {""}
     var challengerResults : Array<Boolean> = Array(5){ false }
     var opponentResults : Array<Boolean> = Array(5){ false }
+    var winner : WinnerStatus = WinnerStatus.Unassigned
 
-    fun setCategoriesToRound() {
+    fun updateRoundStatus() {
+        if (roundStatus == RoundStatus.Unfinished)
+        {
+            roundStatus = RoundStatus.Finished
 
+            setRoundWinner()
+        }
+
+        if(roundStatus == RoundStatus.NotStarted)
+        {
+            roundStatus = RoundStatus.Unfinished
+        }
+    }
+
+    private fun setRoundWinner()
+    {
+        if(challengerResults.count{ it } > opponentResults.count{ it })
+        {
+            winner = WinnerStatus.Challenger
+        }
+        else if(challengerResults.count{ it } < opponentResults.count{ it })
+        {
+            winner = WinnerStatus.Opponent
+        }
+        else if(challengerResults.count{ it } == opponentResults.count{ it })
+        {
+            winner = WinnerStatus.Draw
+        }
     }
 }
 

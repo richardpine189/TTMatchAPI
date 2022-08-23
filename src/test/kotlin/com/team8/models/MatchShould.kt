@@ -3,6 +3,7 @@ package com.team8.models
 import com.team8.domain.Match
 import com.team8.domain.MatchTurn
 import com.team8.domain.RoundStatus
+import com.team8.domain.WinnerStatus
 import junit.framework.TestCase.*
 import org.junit.Test
 
@@ -23,6 +24,7 @@ class MatchShould {
 
         val match = SetNewMatch()
         match.setAnswers(answers = arrayOf("","",""))
+        match.setResults(arrayOf(true, false, true))
         val matchTurn = match.matchTurn
         //Assert
         assertEquals(matchTurn, MatchTurn.Opponent)
@@ -34,8 +36,8 @@ class MatchShould {
         val answers = arrayOf<String>()
         val match = SetNewMatch()
         match.setAnswers(answers)
+        match.setResults(arrayOf<Boolean>())
 
-        //
         assertEquals(match.rounds[0].challengerAnswers, answers)
     }
 
@@ -45,9 +47,10 @@ class MatchShould {
         val answers = arrayOf<String>()
         val match = SetNewMatch()
         match.setAnswers(answers)
+        match.setResults(arrayOf<Boolean>())
         match.setAnswers(answers)
+        match.setResults(arrayOf<Boolean>())
 
-        //
         assertEquals(match.rounds[0].opponentAnswers, answers)
     }
 
@@ -58,6 +61,7 @@ class MatchShould {
         val answers = arrayOf<String>("Hola","Theo","Que","Tal","Estas")
         val match = SetNewMatch()
         match.setAnswers(answers)
+        match.setResults(arrayOf<Boolean>())
 
         for(i in 0..4)
         {
@@ -75,7 +79,10 @@ class MatchShould {
         val answers2 = arrayOf<String>("Hola","Theo","Que","Tal","Estas")
         val match = SetNewMatch()
         match.setAnswers(answers)
+        match.setResults(arrayOf<Boolean>())
         match.setAnswers(answers2)
+        match.setResults(arrayOf<Boolean>())
+
         for(i in 0..4)
         {
             if(match.rounds[0].opponentAnswers[i] != answers2[i])
@@ -91,7 +98,10 @@ class MatchShould {
         val answers = arrayOf<String>()
         val match = SetNewMatch()
         match.setAnswers(answers)
+        match.setResults(arrayOf<Boolean>())
         match.setAnswers(answers)
+        match.setResults(arrayOf<Boolean>())
+
         assertEquals(roundExpectedIndex, match.currentRound)
     }
 
@@ -135,9 +145,66 @@ class MatchShould {
         assertTrue(result)
     }
 
+    @Test
+    fun `get round winner challenger`()
+    {
+        val match = SetNewMatch()
+        CompleteTwoRounds(match)
+
+        match.setResults(arrayOf(true, false, false, false, false))
+        match.setResults(arrayOf(false, false, false, false, false))
+
+        assertEquals(WinnerStatus.Challenger, match.winner)
+    }
+
+    @Test
+    fun `get round winner opponent`()
+    {
+        val match = SetNewMatch()
+        CompleteTwoRounds(match)
+
+        match.setResults(arrayOf(false, false, false, false, false))
+        match.setResults(arrayOf(true, false, false, false, false))
+
+        assertEquals(WinnerStatus.Opponent, match.winner)
+    }
+
+    @Test
+    fun `get round winner draw`()
+    {
+        val match = SetNewMatch()
+        CompleteTwoRounds(match)
+
+        match.setResults(arrayOf(true, false, false, false, false))
+        match.setResults(arrayOf(false, false, false, true, false))
+
+        assertEquals(WinnerStatus.Draw, match.winner)
+    }
+
+    @Test
+    fun `get round winner not finished`()
+    {
+        val match = SetNewMatch()
+        CompleteTwoRounds(match)
+
+        match.setResults(arrayOf(true, false, false, false, false))
+
+        assertEquals(WinnerStatus.Unassigned, match.winner)
+    }
+
     fun SetNewMatch() : Match
     {
         val match = Match("Theo", "Ricardo")
+        return match
+    }
+
+    fun CompleteTwoRounds(match : Match) : Match
+    {
+        match.setResults(arrayOf(true, false, false, false, false))
+        match.setResults(arrayOf(false, false, false, false, false))
+        match.setResults(arrayOf(true, false, false, false, false))
+        match.setResults(arrayOf(false, false, false, false, false))
+
         return match
     }
 }
