@@ -3,9 +3,10 @@ package com.team8.useCases
 import com.team8.domain.Match
 import com.team8.domain.RoundDTO
 import com.team8.interfaces.IMatchRepository
+import com.team8.interfaces.ISetVictoryService
 import com.team8.interfaces.IUpdateMatchUseCase
 
-class UpdateMatchUseCase(private val repository: IMatchRepository) : IUpdateMatchUseCase{
+class UpdateMatchUseCase(private val repository: IMatchRepository, private val service: ISetVictoryService) : IUpdateMatchUseCase{
     override operator fun invoke(round: RoundDTO) : Match
     {
         //obtener match
@@ -13,11 +14,15 @@ class UpdateMatchUseCase(private val repository: IMatchRepository) : IUpdateMatc
 
         //setearle cambios
         match.setCategories(round.categories)
-        match.setResults(round.results)
+
         match.setAnswers(round.answers)
+
+        match.setResults(round.results)
 
         //guardar
         repository.saveMatch(match)
+        //MATCHSERVICE ->USER
+
 
         return match
     }

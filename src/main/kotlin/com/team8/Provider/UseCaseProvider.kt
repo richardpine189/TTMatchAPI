@@ -14,7 +14,7 @@ object UseCaseProvider {
     }
 
     val getUpdateMatch by lazy{
-        UpdateMatchUseCase(RepositoryProvider.getRepository)
+        UpdateMatchUseCase(RepositoryProvider.getRepository, ServiceProvider.getSetVictory)
     }
 
 

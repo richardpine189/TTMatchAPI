@@ -12,7 +12,12 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
     fun setCategories(categories : Array<String>) {
         rounds[currentRound].categoryNames = categories
     }
-
+    fun setAnswers(answers: Array<String>) {
+        if (matchTurn == MatchTurn.Challenger)
+            rounds[currentRound].challengerAnswers = answers
+        else
+            rounds[currentRound].opponentAnswers = answers
+    }
     fun setResults(results : Array<Boolean>) {
         if (matchTurn == MatchTurn.Challenger)
             rounds[currentRound].challengerResults = results
@@ -30,18 +35,13 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
             switchPlayerTurn()
         }
 
-        if(currentRound >= rounds.size)
+        if(rounds[rounds.size].roundStatus == RoundStatus.Finished)
         {
             setMatchWinner()
         }
     }
 
-    fun setAnswers(answers: Array<String>) {
-        if (matchTurn == MatchTurn.Challenger)
-            rounds[currentRound].challengerAnswers = answers
-        else
-            rounds[currentRound].opponentAnswers = answers
-    }
+
 
     private fun switchPlayerTurn()
     {
@@ -65,6 +65,7 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
         {
             winner = WinnerStatus.Draw
         }
+
     }
 
     // FALTA ID

@@ -10,7 +10,7 @@ import io.ktor.server.routing.*
 
 var matchList = mutableListOf<Match>(
     Match("Ricardo", "Theo", 0),
-    Match("Romina", "Ricardo", 1)
+    //Match("Romina", "Ricardo", 1)
 )
 
 fun Application.matchRouting() {
