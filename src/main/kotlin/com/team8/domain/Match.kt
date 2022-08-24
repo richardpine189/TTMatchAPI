@@ -35,7 +35,7 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
             switchPlayerTurn()
         }
 
-        if(rounds[rounds.size].roundStatus == RoundStatus.Finished)
+        if(rounds[rounds.size-1].roundStatus == RoundStatus.Finished)
         {
             setMatchWinner()
         }

@@ -4,6 +4,6 @@ import com.team8.domain.Match
 import com.team8.domain.RoundDTO
 
 interface IUpdateMatchUseCase {
-    operator fun invoke(round: RoundDTO) : Match
+    suspend operator fun invoke(round: RoundDTO) : Match
 
 }
