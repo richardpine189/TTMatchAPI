@@ -21,6 +21,10 @@ class UpdateMatchUseCase(private val repository: IMatchRepository, private val s
 
         match.setResults(round.results)
 
+        match.setLetter(round.letter)
+
+        match.setTimeLeft(round.timeLeft)
+
         //guardar
         repository.saveMatch(match)
 

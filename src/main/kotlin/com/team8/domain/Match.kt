@@ -9,6 +9,7 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
     // Estos tres métodos públicos (setCategories, setResults y setAnswers) deberían ser privados y ser llamados desde un método único que reciba un RoundDTO
     // aparte de llamar él a updateRoundStatus
 
+
     fun setCategories(categories : Array<String>) {
         rounds[currentRound].categoryNames = categories
     }
@@ -41,6 +42,17 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
         }
     }
 
+    fun setLetter(letter : Char)
+    {
+        if(rounds[currentRound].letter != null)
+            rounds[currentRound].letter = letter
+    }
+
+    fun setTimeLeft(timeLeft : Int)
+    {
+        if(rounds[currentRound].timeLeft != null)
+            rounds[currentRound].timeLeft = timeLeft
+    }
 
 
     private fun switchPlayerTurn()
