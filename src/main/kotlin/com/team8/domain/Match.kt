@@ -44,13 +44,15 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
 
     fun setLetter(letter : Char)
     {
-        if(rounds[currentRound].letter != null)
+        println(letter)
+        if(rounds[currentRound].letter == null)
             rounds[currentRound].letter = letter
     }
 
     fun setTimeLeft(timeLeft : Int)
     {
-        if(rounds[currentRound].timeLeft != null)
+        println(timeLeft)
+        if(rounds[currentRound].timeLeft == null)
             rounds[currentRound].timeLeft = timeLeft
     }
 
@@ -86,7 +88,7 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
     var currentRound = 0
 
     var winner : WinnerStatus = WinnerStatus.Unassigned
-
+    var isRegistred : Boolean = false
 }
 
 enum class MatchTurn {Challenger, Opponent}

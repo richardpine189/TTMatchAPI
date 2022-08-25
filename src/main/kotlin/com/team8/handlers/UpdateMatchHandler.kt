@@ -28,6 +28,8 @@ class UpdateMatchHandler(val updateMatchUseCase : IUpdateMatchUseCase, val saveM
     suspend fun PipelineContext<Unit, ApplicationCall>.updateMatch(){
         val parameters = call.receiveText()
         val roundDTO = Json.decodeFromString<RoundDTO>(parameters)
+        println(roundDTO.letter)
+        println(roundDTO.timeLeft)
         call.respond(HttpStatusCode.OK)
         call.respond(updateMatchUseCase(roundDTO))
     }
