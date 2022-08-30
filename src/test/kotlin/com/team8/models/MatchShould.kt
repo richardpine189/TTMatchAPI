@@ -1,6 +1,6 @@
 package com.team8.models
 
-import com.team8.domain.Match
+import com.team8.domain.boolean
 import com.team8.domain.MatchTurn
 import com.team8.domain.RoundStatus
 import com.team8.domain.WinnerStatus
@@ -192,13 +192,13 @@ class MatchShould {
         assertEquals(WinnerStatus.Unassigned, match.winner)
     }
 
-    fun SetNewMatch() : Match
+    fun SetNewMatch() : boolean
     {
-        val match = Match("Theo", "Ricardo")
+        val match = boolean("Theo", "Ricardo")
         return match
     }
 
-    fun CompleteTwoRounds(match : Match) : Match
+    fun CompleteTwoRounds(match : boolean) : boolean
     {
         match.setResults(arrayOf(true, false, false, false, false))
         match.setResults(arrayOf(false, false, false, false, false))

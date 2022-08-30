@@ -2,6 +2,7 @@ package com.team8.handlers
 
 import com.team8.domain.Round
 import com.team8.domain.RoundDTO
+import com.team8.domain.RoundStatus
 import com.team8.interfaces.IHandler
 import com.team8.interfaces.ISaveMatchUseCase
 import com.team8.interfaces.IUpdateMatchUseCase
@@ -28,9 +29,6 @@ class UpdateMatchHandler(val updateMatchUseCase : IUpdateMatchUseCase, val saveM
     suspend fun PipelineContext<Unit, ApplicationCall>.updateMatch(){
         val parameters = call.receiveText()
         val roundDTO = Json.decodeFromString<RoundDTO>(parameters)
-        println(roundDTO.letter)
-        println(roundDTO.timeLeft)
-        call.respond(HttpStatusCode.OK)
-        call.respond(updateMatchUseCase(roundDTO))
+        call.respond(HttpStatusCode.OK, updateMatchUseCase(roundDTO))
     }
 }

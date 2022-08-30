@@ -1,15 +1,15 @@
 package com.team8.useCases
 
-import com.team8.domain.Match
+import com.team8.domain.boolean
 import com.team8.domain.RoundDTO
+import com.team8.domain.RoundStatus
 import com.team8.domain.WinnerStatus
 import com.team8.interfaces.IMatchRepository
 import com.team8.interfaces.ISetVictoryService
 import com.team8.interfaces.IUpdateMatchUseCase
-import java.awt.event.WindowEvent
 
 class UpdateMatchUseCase(private val repository: IMatchRepository, private val service: ISetVictoryService) : IUpdateMatchUseCase{
-    override suspend operator  fun invoke(round: RoundDTO) : Match
+    override suspend operator fun invoke(round: RoundDTO) : Boolean
     {
         //obtener match
         val match = repository.getMatch(round.id)
@@ -28,14 +28,13 @@ class UpdateMatchUseCase(private val repository: IMatchRepository, private val s
         //guardar
         repository.saveMatch(match)
 
-
         //MATCHSERVICE ->USER
         CallVictoryService(match)
 
-        return match
+        return match.rounds[match.currentRound].roundStatus != RoundStatus.Unfinished
     }
 
-    private suspend fun CallVictoryService(match:Match)
+    private suspend fun CallVictoryService(match:boolean)
     {
         if(match.winner == WinnerStatus.Challenger)
             service.setVictory(match.challenger)

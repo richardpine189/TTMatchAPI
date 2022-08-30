@@ -1,15 +1,13 @@
 package com.team8.plugins
 
 import com.team8.Provider.HandlerProvider
-import com.team8.domain.Match
-import io.ktor.http.*
+import com.team8.domain.boolean
 import io.ktor.server.application.*
-import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-var matchList = mutableListOf<Match>(
-    Match("Ricardo", "Theo", 0),
+var matchList = mutableListOf<boolean>(
+    boolean("Ricardo", "Theo", 0),
     //Match("Romina", "Ricardo", 1)
 )
 
