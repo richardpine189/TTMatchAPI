@@ -1,6 +1,9 @@
 package com.team8.handlers
 
 import com.team8.Provider.UseCaseProvider
+import com.team8.domain.MatchDTO
+import com.team8.domain.MatchTurn
+import com.team8.domain.WinnerStatus
 import com.team8.interfaces.ICreateMatchUseCase
 import com.team8.interfaces.IHandler
 import com.team8.plugins.matchList
@@ -28,8 +31,8 @@ class CreateMatchHandler(val CreateMatchUseCase : ICreateMatchUseCase) : IHandle
             val match = matchCreator(idParameter)
             match.id = matchList.size
             matchList.add(match)
-            //call.respond(HttpStatusCode.Created, "Match Creado")
-            call.respond(match)
+            val matchDto = MatchDTO(match.id,match.challenger,match.opponent,match.currentRound,true, false, arrayOf(WinnerStatus.Unassigned,WinnerStatus.Unassigned,WinnerStatus.Unassigned))
+            call.respond(matchDto)
         }
     }
 

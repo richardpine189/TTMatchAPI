@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-class boolean(val challenger: String, val opponent: String, var id : Int = -1)
+class Match(val challenger: String, val opponent: String, var id : Int = -1)
 {
     // Estos tres métodos públicos (setCategories, setResults y setAnswers) deberían ser privados y ser llamados desde un método único que reciba un RoundDTO
     // aparte de llamar él a updateRoundStatus

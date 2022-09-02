@@ -1,6 +1,6 @@
 package com.team8.useCases
 
-import com.team8.domain.boolean
+import com.team8.domain.Match
 import com.team8.domain.RoundDTO
 import com.team8.domain.RoundStatus
 import com.team8.domain.WinnerStatus
@@ -34,7 +34,7 @@ class UpdateMatchUseCase(private val repository: IMatchRepository, private val s
         return match.rounds[match.currentRound].roundStatus != RoundStatus.Unfinished
     }
 
-    private suspend fun CallVictoryService(match:boolean)
+    private suspend fun CallVictoryService(match:Match)
     {
         if(match.winner == WinnerStatus.Challenger)
             service.setVictory(match.challenger)

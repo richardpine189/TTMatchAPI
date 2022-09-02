@@ -1,8 +1,8 @@
 package com.team8.interfaces
 
-import com.team8.domain.boolean
+import com.team8.domain.Match
 
 interface IMatchRepository {
-    fun saveMatch(match : boolean)
-    fun getMatch(id : Int) : boolean
+    fun saveMatch(match : Match)
+    fun getMatch(id : Int) : Match
 }

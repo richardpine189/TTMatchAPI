@@ -1,6 +1,6 @@
 package com.team8.models
 
-import com.team8.domain.boolean
+import com.team8.domain.Match
 import com.team8.domain.WinnerStatus
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -9,7 +9,7 @@ class RoundShould {
     @Test
     fun `get round winner challenger`()
     {
-        val match = boolean("test", "test2")
+        val match = Match("test", "test2")
         match.setResults(arrayOf(true, false, false, false, false))
         match.setResults(arrayOf(false, false, false, false, false))
         val round = match.rounds[0]
@@ -20,7 +20,7 @@ class RoundShould {
     @Test
     fun `get round winner opponent`()
     {
-        val match = boolean("test", "test2")
+        val match = Match("test", "test2")
         match.setResults(arrayOf(false, false, false, false, false))
         match.setResults(arrayOf(true, false, false, false, false))
         val round = match.rounds[0]
@@ -31,7 +31,7 @@ class RoundShould {
     @Test
     fun `get round winner draw`()
     {
-        val match = boolean("test", "test2")
+        val match = Match("test", "test2")
         match.setResults(arrayOf(true, false, false, false, false))
         match.setResults(arrayOf(true, false, false, false, false))
         val round = match.rounds[0]
@@ -42,7 +42,7 @@ class RoundShould {
     @Test
     fun `get round winner not finished`()
     {
-        val match = boolean("test", "test2")
+        val match = Match("test", "test2")
         match.setResults(arrayOf(true, false, false, false, false))
         val round = match.rounds[0]
 
