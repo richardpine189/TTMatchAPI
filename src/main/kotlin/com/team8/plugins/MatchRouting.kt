@@ -1,10 +1,7 @@
 package com.team8.plugins
 
 import com.team8.Provider.HandlerProvider
-import com.team8.domain.Match
-import com.team8.domain.MatchDTO
-import com.team8.domain.MatchTurn
-import com.team8.domain.WinnerStatus
+import com.team8.domain.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -32,26 +29,36 @@ fun Application.matchRouting() {
             get("/{userName}") {
                 val candidate = call.parameters["userName"]
                 val listMatch = matchList.filter{ it.challenger == candidate || it.opponent == candidate}
-                println(candidate)
-                val listMatchDTO = mutableListOf<MatchDTO>()
-                listMatch.forEach{ listMatchDTO.add(MatchDTO(
+                val listMatchDTO = mutableListOf<OnGoingMatchDTO>()
+                listMatch.forEach{ listMatchDTO.add(
+                    OnGoingMatchDTO(
                         it.id,
                         it.challenger,
                         it.opponent,
                         it.currentRound,
                         (it.matchTurn == MatchTurn.Challenger),
-                        false, // HARDCODED ENDROUND COMPROBATION
-                        arrayOf(it.rounds[0].winner, it.rounds[1].winner, it.rounds[2].winner)
-
+                        arrayOf(it.rounds[0].winner,it.rounds[1].winner,it.rounds[2].winner)
                     )
                 )
                 }
-
-                println(listMatchDTO[0].roundResults[0])
-                println(listMatchDTO[0].roundResults[1])
-                println(listMatchDTO[0].roundResults[2])
                 call.respond(listMatchDTO)
             }
         }
+            route("/GetMatchById") {
+                get("/{matchId}") {
+                    val idCandidate = call.parameters["matchId"]!!.toIntOrNull()
+                    val match = matchList.first{ it.id == idCandidate}
+                    val activeMatchDTO = ActiveMatchDTO(
+                        match.challenger,
+                        match.opponent,
+                        match.currentRound,
+                        match.rounds[match.currentRound].letter!!,
+                        match.rounds[match.currentRound].timeLeft!!,
+                        match.rounds[match.currentRound].categoryNames,
+
+                    )
+                    call.respond(activeMatchDTO)
+                    }
+                }
+        }
     }
-}
