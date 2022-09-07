@@ -6,11 +6,11 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-var matchList = mutableListOf(
-    Match("Ricardo", "Theo", 0),/*
+var matchList = mutableListOf<Match>()
+    /*Match("Ricardo", "Theo", 0),
     Match("Theo", "Ricardo", 1),
     Match("Romina", "Ricardo", 2)*/
-)
+
 
 fun Application.matchRouting() {
     val createMathHandler = HandlerProvider.createMatch
