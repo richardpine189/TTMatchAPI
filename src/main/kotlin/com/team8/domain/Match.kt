@@ -15,16 +15,45 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
     }
     fun setAnswers(answers: Array<String>) {
         if (matchTurn == MatchTurn.Challenger)
+        {
             rounds[currentRound].challengerAnswers = answers
+        }
         else
+        {
             rounds[currentRound].opponentAnswers = answers
+        }
     }
     fun setResults(results : Array<Boolean>) {
         if (matchTurn == MatchTurn.Challenger)
+        {
             rounds[currentRound].challengerResults = results
+        }
         else
+        {
             rounds[currentRound].opponentResults = results
+        }
+    }
 
+    fun setLetter(letter : Char)
+    {
+        println(letter)
+        if(rounds[currentRound].letter == null)
+        {
+            rounds[currentRound].letter = letter
+        }
+    }
+
+    fun setTimeLeft(timeLeft : Int)
+    {
+        println(timeLeft)
+        if(rounds[currentRound].timeLeft == null)
+        {
+            rounds[currentRound].timeLeft = timeLeft
+        }
+    }
+
+    fun endTurn()
+    {
         rounds[currentRound].updateRoundStatus()
 
         if(rounds[currentRound].roundStatus == RoundStatus.Finished)
@@ -42,27 +71,16 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
         }
     }
 
-    fun setLetter(letter : Char)
-    {
-        println(letter)
-        if(rounds[currentRound].letter == null)
-            rounds[currentRound].letter = letter
-    }
-
-    fun setTimeLeft(timeLeft : Int)
-    {
-        println(timeLeft)
-        if(rounds[currentRound].timeLeft == null)
-            rounds[currentRound].timeLeft = timeLeft
-    }
-
-
     private fun switchPlayerTurn()
     {
         if(matchTurn == MatchTurn.Opponent)
+        {
             matchTurn = MatchTurn.Challenger
+        }
         else
+        {
             matchTurn = MatchTurn.Opponent
+        }
     }
 
     private fun setMatchWinner()
@@ -81,7 +99,6 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
         }
 
     }
-
 
     var matchTurn = MatchTurn.Challenger
     var rounds = arrayOf<Round>(Round(), Round(), Round())

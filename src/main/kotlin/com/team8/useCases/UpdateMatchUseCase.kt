@@ -25,6 +25,8 @@ class UpdateMatchUseCase(private val repository: IMatchRepository, private val s
 
         match.setTimeLeft(round.timeLeft)
 
+        match.endTurn()
+
         //guardar
         repository.saveMatch(match)
 
