@@ -24,6 +24,7 @@ fun Application.matchRouting() {
                 call.respond(matchList)
             }
         }
+
         route("/getMatches") {
             get("/{userName}") {
                 val candidate = call.parameters["userName"]
@@ -44,21 +45,38 @@ fun Application.matchRouting() {
                 call.respond(listMatchDTO)
             }
         }
-            route("/GetMatchById") {
-                get("/{matchId}") {
-                    val idCandidate = call.parameters["matchId"]!!.toIntOrNull()
-                    val match = matchList.first{ it.id == idCandidate}
-                    val activeMatchDTO = ActiveMatchDTO(
-                        match.challenger,
-                        match.opponent,
-                        match.currentRound,
-                        match.rounds[match.currentRound].letter!!,
-                        match.rounds[match.currentRound].timeLeft!!,
-                        match.rounds[match.currentRound].categoryNames,
 
-                    )
-                    call.respond(activeMatchDTO)
-                    }
-                }
+        route("/GetMatchById") {
+            get("/{matchId}") {
+                val idCandidate = call.parameters["matchId"]!!.toIntOrNull()
+                val match = matchList.first{ it.id == idCandidate}
+                val activeMatchDTO = ActiveMatchDTO(
+                    match.challenger,
+                    match.opponent,
+                    match.currentRound,
+                    match.rounds[match.currentRound].letter!!,
+                    match.rounds[match.currentRound].timeLeft!!,
+                    match.rounds[match.currentRound].categoryNames,
+
+                )
+                call.respond(activeMatchDTO)
+            }
+        }
+
+        route("/RoundResults") {
+            get() {
+                val id = call.request.queryParameters["matchId"]!!.toIntOrNull()
+                val roundIndex = call.request.queryParameters["round"]!!.toInt()
+                val match = matchList.first{ it.id == id}
+                val matchResultsDTO = MatchResultsDTO(
+                    match.rounds[roundIndex].categoryNames,
+                    match.rounds[roundIndex].challengerAnswers,
+                    match.rounds[roundIndex].opponentAnswers,
+                    match.rounds[roundIndex].challengerResults,
+                    match.rounds[roundIndex].opponentResults
+                )
+                call.respond(matchResultsDTO)
+            }
+        }
         }
     }
