@@ -62,6 +62,7 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
 
         if(rounds[currentRound].roundStatus == RoundStatus.Finished)
         {
+            if(currentRound < rounds.size - 1)
             currentRound++
         }
         else
