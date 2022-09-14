@@ -11,7 +11,6 @@ var matchList = mutableListOf<Match>()
     Match("Theo", "Ricardo", 1),
     Match("Romina", "Ricardo", 2)*/
 
-
 fun Application.matchRouting() {
     val createMathHandler = HandlerProvider.createMatch
     createMathHandler.routing(this)
@@ -37,6 +36,7 @@ fun Application.matchRouting() {
                         it.opponent,
                         it.currentRound,
                         (it.matchTurn == MatchTurn.Challenger),
+                        it.currentRound == it.rounds.size,
                         arrayOf(it.rounds[0].winner,it.rounds[1].winner,it.rounds[2].winner)
                     )
                 )

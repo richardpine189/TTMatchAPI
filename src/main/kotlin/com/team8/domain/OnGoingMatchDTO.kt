@@ -9,5 +9,6 @@ data class OnGoingMatchDTO(
     val opponentName : String,
     val currentRound : Int,
     val isChallengerTurn : Boolean,
+    val isMatchFinished : Boolean,
     val matchWinnerStatus : Array<WinnerStatus>
 )

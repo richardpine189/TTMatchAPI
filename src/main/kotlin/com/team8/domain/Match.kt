@@ -6,10 +6,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 class Match(val challenger: String, val opponent: String, var id : Int = -1)
 {
+    var matchTurn = MatchTurn.Challenger
+    var rounds = arrayOf<Round>(Round(), Round(), Round())
+    var currentRound = 0
+
+    var winner : WinnerStatus = WinnerStatus.Unassigned
+
     // Estos tres métodos públicos (setCategories, setResults y setAnswers) deberían ser privados y ser llamados desde un método único que reciba un RoundDTO
     // aparte de llamar él a updateRoundStatus
-
-
     fun setCategories(categories : Array<String>) {
         rounds[currentRound].categoryNames = categories
     }
@@ -99,13 +103,6 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
         }
 
     }
-
-    var matchTurn = MatchTurn.Challenger
-    var rounds = arrayOf<Round>(Round(), Round(), Round())
-    var currentRound = 0
-
-    var winner : WinnerStatus = WinnerStatus.Unassigned
-    var isRegistred : Boolean = false
 }
 
 enum class MatchTurn {Challenger, Opponent}
