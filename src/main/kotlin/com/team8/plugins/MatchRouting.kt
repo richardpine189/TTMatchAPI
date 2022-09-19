@@ -37,7 +37,7 @@ fun Application.matchRouting() {
                         it.opponent,
                         it.currentRound,
                         (it.matchTurn == MatchTurn.Challenger),
-                        it.currentRound == it.rounds.size,
+                        it.currentRound == it.rounds.size - 1 && it.rounds[it.currentRound].roundStatus == RoundStatus.Finished,
                         arrayOf(it.rounds[0].winner,it.rounds[1].winner,it.rounds[2].winner)
                     )
                 )
