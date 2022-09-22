@@ -104,7 +104,6 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
         {
             winner = WinnerStatus.Draw
         }
-
     }
 }
 
