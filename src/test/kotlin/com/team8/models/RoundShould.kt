@@ -1,5 +1,6 @@
 package com.team8.models
 
+
 import com.team8.domain.Match
 import com.team8.domain.WinnerStatus
 import org.junit.Test
@@ -11,7 +12,11 @@ class RoundShould {
     {
         val match = Match("test", "test2")
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(false, false, false, false, false))
+        match.endTurn()
+        match.rounds[0].updateRoundStatus()
+
         val round = match.rounds[0]
 
         assertEquals(WinnerStatus.Challenger, round.winner)
@@ -22,7 +27,10 @@ class RoundShould {
     {
         val match = Match("test", "test2")
         match.setResults(arrayOf(false, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
+        //match.rounds[0].updateRoundStatus()
         val round = match.rounds[0]
 
         assertEquals(WinnerStatus.Opponent, round.winner)
@@ -33,17 +41,21 @@ class RoundShould {
     {
         val match = Match("test", "test2")
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
+        match.rounds[0].updateRoundStatus()
         val round = match.rounds[0]
 
         assertEquals(WinnerStatus.Draw, round.winner)
     }
 
     @Test
-    fun `get round winner not finished`()
+    fun `get unassigned winner when the round is not done yet`()
     {
         val match = Match("test", "test2")
         match.setResults(arrayOf(true, false, false, false, false))
+        match.rounds[0].updateRoundStatus()
         val round = match.rounds[0]
 
         assertEquals(WinnerStatus.Unassigned, round.winner)

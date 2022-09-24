@@ -1,17 +1,23 @@
 package com.team8.CreateMatch
 
+
+import com.team8.domain.Match
 import com.team8.interfaces.IMakeMatchService
-import com.team8.interfaces.ISaveMatchUseCase
+import com.team8.interfaces.IMatchRepository
 import com.team8.useCases.CreateMatchUseCase
 import kotlinx.coroutines.test.runTest
 import org.junit.BeforeClass
 import org.junit.Test
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class CreateMatchUseCaseShould {
 
+    private lateinit var resultMatch: Match
     companion object {
 
         @JvmStatic
@@ -22,9 +28,10 @@ class CreateMatchUseCaseShould {
         private lateinit var matchmakingService: IMakeMatchService
 
         @JvmStatic
-        private lateinit var savematchUseCase: ISaveMatchUseCase
+        private lateinit var matchRepository: IMatchRepository
         @JvmStatic
         private lateinit var createMatchUseCase: CreateMatchUseCase
+
 
         @BeforeClass
         @JvmStatic
@@ -33,16 +40,16 @@ class CreateMatchUseCaseShould {
             challenger = "Ricardo"
             opponent = "Theo"
             matchmakingService = mock()
-            savematchUseCase = mock()
+            matchRepository = mock()
             whenever(matchmakingService.GetOpponent(challenger)).thenReturn(opponent)
-            createMatchUseCase = CreateMatchUseCase(matchmakingService, savematchUseCase)
+            createMatchUseCase = CreateMatchUseCase(matchmakingService, matchRepository)
         }
     }
 
     @Test
     fun `return challenger name inside match`() = runTest{
         // Act
-        val resultMatch = createMatchUseCase(challenger)
+        CreateMatch()
 
         // Assert
         assertEquals(challenger, resultMatch.challenger)
@@ -51,15 +58,32 @@ class CreateMatchUseCaseShould {
     @Test
     fun `return opponent name inside match`() = runTest{
         // Act
-        val resultMatch = createMatchUseCase(challenger)
+        CreateMatch()
 
         // Assert
         assertEquals(opponent, resultMatch.opponent)
     }
 
     @Test
-    fun `save match when its created`()
-    {
+    fun `return Match when is request CreateMatch`() = runTest{
 
+        //Act
+        CreateMatch()
+
+        //Assert
+        assertTrue(resultMatch is Match)
+    }
+    @Test
+    fun `save match when its created`() = runTest{
+
+        //Arrange
+        CreateMatch()
+
+        verify(matchRepository,times(1)).saveMatch(resultMatch)
+    }
+
+    private suspend fun CreateMatch()
+    {
+        resultMatch = createMatchUseCase(challenger)
     }
 }

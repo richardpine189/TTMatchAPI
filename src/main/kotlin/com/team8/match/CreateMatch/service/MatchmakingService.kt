@@ -1,5 +1,6 @@
-package com.team8.services
+package com.team8.match.CreateMatch.service
 import com.team8.interfaces.IMakeMatchService
+
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -7,8 +8,15 @@ import io.ktor.client.statement.*
 class MatchmakingService(val PATH : String) : IMakeMatchService {
     override suspend fun GetOpponent(challengerId : String) : String {
         val client = HttpClient()
-        val response = client.get("$PATH/getOpponent/$challengerId")
-        return response.bodyAsText()
+        var response : HttpResponse
+
+        try{
+            response = client.get("$PATH/getOpponent/$challengerId")
+            return response.bodyAsText()
+        }
+        catch (ex : Exception){
+            throw Exception("The service is not available")
+        }
     }
 }
 

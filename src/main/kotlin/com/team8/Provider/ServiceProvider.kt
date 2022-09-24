@@ -1,6 +1,6 @@
 package com.team8.Provider
 
-import com.team8.services.MatchmakingService
+import com.team8.match.CreateMatch.service.MatchmakingService
 import com.team8.services.SetVictoryService
 
 object ServiceProvider {

@@ -1,5 +1,4 @@
 package com.team8.plugins
-
 import com.team8.Provider.HandlerProvider
 import com.team8.domain.*
 import io.ktor.server.application.*

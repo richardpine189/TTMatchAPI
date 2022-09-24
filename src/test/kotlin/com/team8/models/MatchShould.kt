@@ -1,5 +1,6 @@
 package com.team8.models
 
+
 import com.team8.domain.Match
 import com.team8.domain.MatchTurn
 import com.team8.domain.RoundStatus
@@ -10,7 +11,7 @@ import org.junit.Test
 class MatchShould {
 
     @Test
-    fun `Check if the round status is finished in the given match`()
+    fun `Check if the round status is not Started when the match its created`()
     {
         val match = SetNewMatch()
         val status = match.rounds[0].roundStatus
@@ -19,12 +20,14 @@ class MatchShould {
         assertEquals(status, RoundStatus.NotStarted)
     }
     @Test
-    fun `Change user turn when the answers are complete`()
+    fun `Change user turn when a pack of answers is sent`()
     {
 
         val match = SetNewMatch()
         match.setAnswers(answers = arrayOf("","",""))
         match.setResults(arrayOf(true, false, true))
+        //ES RARO
+        match.endTurn()
         val matchTurn = match.matchTurn
         //Assert
         assertEquals(matchTurn, MatchTurn.Opponent)
@@ -48,6 +51,8 @@ class MatchShould {
         val match = SetNewMatch()
         match.setAnswers(answers)
         match.setResults(arrayOf<Boolean>())
+        //ES RARO
+        match.endTurn()
         match.setAnswers(answers)
         match.setResults(arrayOf<Boolean>())
 
@@ -72,7 +77,7 @@ class MatchShould {
         assertEquals(true, checkAnswer)
     }
     @Test
-    fun `Set the challenger opponent depending of the matchturn`()
+    fun `Set the opponent answers depending of the matchturn`()
     {
         var checkAnswer = true
         val answers = arrayOf<String>()
@@ -80,6 +85,8 @@ class MatchShould {
         val match = SetNewMatch()
         match.setAnswers(answers)
         match.setResults(arrayOf<Boolean>())
+        //ES RARO
+        match.endTurn()
         match.setAnswers(answers2)
         match.setResults(arrayOf<Boolean>())
 
@@ -99,8 +106,12 @@ class MatchShould {
         val match = SetNewMatch()
         match.setAnswers(answers)
         match.setResults(arrayOf<Boolean>())
+        //ES RARO
+        match.endTurn()
         match.setAnswers(answers)
         match.setResults(arrayOf<Boolean>())
+        //ES RARO
+        match.endTurn()
 
         assertEquals(roundExpectedIndex, match.currentRound)
     }
@@ -146,48 +157,54 @@ class MatchShould {
     }
 
     @Test
-    fun `get round winner challenger`()
+    fun `get match winner challenger`()
     {
         val match = SetNewMatch()
         CompleteTwoRounds(match)
 
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(false, false, false, false, false))
-
+        match.endTurn()
         assertEquals(WinnerStatus.Challenger, match.winner)
     }
 
     @Test
-    fun `get round winner opponent`()
+    fun `get match winner opponent`()
     {
         val match = SetNewMatch()
         CompleteTwoRounds(match)
 
         match.setResults(arrayOf(false, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
 
         assertEquals(WinnerStatus.Opponent, match.winner)
     }
 
     @Test
-    fun `get round winner draw`()
+    fun `get match winner draw`()
     {
         val match = SetNewMatch()
         CompleteTwoRounds(match)
 
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(false, false, false, true, false))
+        match.endTurn()
 
         assertEquals(WinnerStatus.Draw, match.winner)
     }
 
     @Test
-    fun `get round winner not finished`()
+    fun `get match winner not finished`()
     {
         val match = SetNewMatch()
         CompleteTwoRounds(match)
 
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
 
         assertEquals(WinnerStatus.Unassigned, match.winner)
     }
@@ -201,9 +218,13 @@ class MatchShould {
     fun CompleteTwoRounds(match : Match) : Match
     {
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(false, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(true, false, false, false, false))
+        match.endTurn()
         match.setResults(arrayOf(false, false, false, false, false))
+        match.endTurn()
 
         return match
     }

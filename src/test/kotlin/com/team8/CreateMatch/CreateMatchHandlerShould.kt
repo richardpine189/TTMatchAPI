@@ -1,9 +1,7 @@
 package com.team8.CreateMatch
 
 import com.team8.domain.Match
-import com.team8.domain.MatchDTO
 import com.team8.domain.Parsers.MatchParser
-import com.team8.domain.WinnerStatus
 import com.team8.handlers.CreateMatchHandler
 import com.team8.interfaces.ICreateMatchUseCase
 import io.ktor.http.*
@@ -51,6 +49,19 @@ class CreateMatchHandlerShould {
 
         handleRequest(HttpMethod.Get, "/newMatch").apply {
             assertEquals(HttpStatusCode.BadRequest, response.status())
+        }
+    }
+
+    @Test
+    fun `return NotFound when the user services is down`() : Unit = withTestApplication {
+        installSerialization()
+
+        val createMatchUseCase : ICreateMatchUseCase = mockk()
+        val handler = CreateMatchHandler(createMatchUseCase)
+        handler.routing(application)
+
+        handleRequest(HttpMethod.Get, "/newMatch/?challengerUserName=Theo").apply {
+            assertEquals(HttpStatusCode.NotFound, response.status())
         }
     }
 

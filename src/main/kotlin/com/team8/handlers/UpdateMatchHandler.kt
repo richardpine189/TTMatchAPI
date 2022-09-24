@@ -1,10 +1,6 @@
 package com.team8.handlers
-
-import com.team8.domain.Round
 import com.team8.domain.RoundDTO
-import com.team8.domain.RoundStatus
 import com.team8.interfaces.IHandler
-import com.team8.interfaces.ISaveMatchUseCase
 import com.team8.interfaces.IUpdateMatchUseCase
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -16,7 +12,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlin.text.get
 
-class UpdateMatchHandler(val updateMatchUseCase : IUpdateMatchUseCase, val saveMatchUseCase: ISaveMatchUseCase) : IHandler {
+class UpdateMatchHandler(val updateMatchUseCase : IUpdateMatchUseCase) : IHandler {
 
     override fun routing(a: Application) {
         a.routing {
