@@ -12,10 +12,10 @@ class CreateMatchUseCase(val matchmakingService: IMakeMatchService, val matchRep
 
     override suspend operator fun invoke(challenger: String): Match {
         val opponent = matchmakingService.GetOpponent(challenger)
-        val opponentName = Json.decodeFromString<String>(opponent)
+        //val opponentName = Json.decodeFromString<String>(opponent)
+        var match = Match(challenger, opponent)
+        matchRepository.saveMatch(match)
 
-        // TODO : guardar match
-
-        return Match(challenger, opponentName)
+        return match
     }
 }
