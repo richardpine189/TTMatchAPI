@@ -1,6 +1,8 @@
 package com.team8.plugins
-import com.team8.Provider.HandlerProvider
-import com.team8.domain.*
+
+import com.team8.match.domain.*
+import com.team8.provider.HandlerProvider
+
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -17,13 +19,27 @@ fun Application.matchRouting() {
     val updateMatchHandler = HandlerProvider.updateMatch
     updateMatchHandler.routing(this)
 
+    val getMatchListByPlayerID = HandlerProvider.getMatchList
+    getMatchListByPlayerID.routing(this)
+
+    val getMatchById = HandlerProvider.getMatch
+    getMatchById.routing(this)
+
+    val getMatchResults = HandlerProvider.getMatchResults
+    getMatchResults.routing(this)
+
+    val reMatch = HandlerProvider.getReMatch
+    reMatch.routing(this)
+
     routing {
         route("testGet") {
             get {
                 call.respond(matchList)
             }
         }
-
+    }
+}
+/*
         route("/getMatches") {
             get("/{userName}") {
                 val candidate = call.parameters["userName"]
@@ -44,7 +60,8 @@ fun Application.matchRouting() {
                 call.respond(listMatchDTO)
             }
         }
-
+*/
+        /*
         route("/GetMatchById") {
             get("/{matchId}") {
                 val idCandidate = call.parameters["matchId"]!!.toIntOrNull()
@@ -78,4 +95,4 @@ fun Application.matchRouting() {
             }
         }
         }
-    }
+    }*/

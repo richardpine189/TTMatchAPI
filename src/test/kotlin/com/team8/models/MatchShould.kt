@@ -1,10 +1,10 @@
 package com.team8.models
 
 
-import com.team8.domain.Match
-import com.team8.domain.MatchTurn
-import com.team8.domain.RoundStatus
-import com.team8.domain.WinnerStatus
+import com.team8.match.domain.Match
+import com.team8.match.domain.MatchTurn
+import com.team8.match.domain.RoundStatus
+import com.team8.match.domain.WinnerStatus
 import junit.framework.TestCase.*
 import org.junit.Test
 

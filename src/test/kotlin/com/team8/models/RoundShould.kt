@@ -1,8 +1,8 @@
 package com.team8.models
 
 
-import com.team8.domain.Match
-import com.team8.domain.WinnerStatus
+import com.team8.match.domain.Match
+import com.team8.match.domain.WinnerStatus
 import org.junit.Test
 import kotlin.test.assertEquals
 
