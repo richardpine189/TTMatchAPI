@@ -28,8 +28,6 @@ class CreateMatchHandler(val CreateMatchUseCase : ICreateMatchUseCase) : IHandle
         else
         {
             val match = CreateMatchUseCase(idParameter)
-            match.id = matchList.size
-            matchList.add(match)
             val matchDto = MatchParser.toDto(match)
             call.respond(matchDto)
         }

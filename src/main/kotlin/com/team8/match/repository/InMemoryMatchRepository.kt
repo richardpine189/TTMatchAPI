@@ -14,6 +14,7 @@ class InMemoryMatchRepository(localRepositoryPath : String) : IMatchRepository {
         }
         else
         {
+            match.id = matchList.size
             matchList.add(match)
         }
     }

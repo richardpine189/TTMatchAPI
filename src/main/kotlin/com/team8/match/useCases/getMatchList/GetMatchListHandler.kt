@@ -18,8 +18,8 @@ class GetMatchListHandler(val getMatcheListUseCase : IGetMatchListUseCase) : IHa
     }
 
     suspend fun PipelineContext<Unit, ApplicationCall>.getMatchList(){
-        val candidate = call.request.queryParameters["challengerUserName"]
-
+        //val candidate = call.request.queryParameters["userName"]
+        val candidate = call.parameters["userName"]
         if (candidate == null)
         {
             call.respond(HttpStatusCode.BadRequest, "userName is needed")
