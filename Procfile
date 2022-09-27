@@ -1,1 +1,1 @@
-web: build/install/MatchAPI/bin/MatchAPI
+web: build/install/matchAPI/bin/matchAPI
