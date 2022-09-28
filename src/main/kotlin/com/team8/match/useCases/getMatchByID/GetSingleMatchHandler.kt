@@ -11,7 +11,7 @@ class GetSingleMatchHandler(val getMatchUseCase : IGetMatchUseCase) : IHandler {
 
     override fun routing(a: Application) {
         a.routing {
-            route("/GetMatchById") {
+            route("/GetMatchById/{matchId}") {
                 get { getMatch() }
             }
         }

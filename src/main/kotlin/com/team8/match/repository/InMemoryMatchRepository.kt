@@ -3,8 +3,12 @@ package com.team8.match.repository
 import com.team8.match.domain.Match
 import com.team8.plugins.matchList
 
-class InMemoryMatchRepository(localRepositoryPath : String) : IMatchRepository {
 
+class InMemoryMatchRepository(localRepositoryPath : String) : IMatchRepository {
+    //var matchList = mutableListOf<Match>(Match("Ricardo", "Theo", 0))
+    /*
+    Match("Theo", "Ricardo", 1),
+    Match("Romina", "Ricardo", 2)*/
     override fun saveMatch(match : Match) {
         val index = matchList.indexOfFirst { it.id == match.id }
 

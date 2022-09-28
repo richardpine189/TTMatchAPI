@@ -1,6 +1,5 @@
-package com.team8.provider
+package com.team8.Provider
 
-import com.team8.Provider.UseCaseProvider
 import com.team8.match.useCases.getMatchResults.GetMatchResultsHandler
 import com.team8.match.useCases.updateMatch.UpdateMatchHandler
 import com.team8.match.useCases.createMatch.CreateMatchHandler
