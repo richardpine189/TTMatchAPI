@@ -35,7 +35,7 @@ class UpdateMatchUseCase(private val repository: IMatchRepository, private val s
 
         if(match.winner != WinnerStatus.Unassigned)
         {
-            return false;
+            return true;
         }
 
         return match.rounds[match.currentRound].roundStatus != RoundStatus.Unfinished
