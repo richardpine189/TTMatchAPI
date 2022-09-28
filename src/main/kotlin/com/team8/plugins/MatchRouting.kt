@@ -56,6 +56,12 @@ fun Application.matchRouting() {
                 call.respond(activeMatchDTO)
             }
         }
+
+        route("/resetTest"){
+            post {
+                matchList = mutableListOf<Match>()
+            }
+        }
     }
 }
 /*
