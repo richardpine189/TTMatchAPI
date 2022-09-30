@@ -30,11 +30,10 @@ class UpdateMatchUseCase(private val repository: IMatchRepository, private val s
         //guardar
         repository.saveMatch(match)
 
-        //MATCHSERVICE ->USER
-        CallVictoryService(match)
-
         if(match.winner != WinnerStatus.Unassigned)
         {
+            //MATCHSERVICE ->USER
+            CallVictoryService(match)
             return true;
         }
 

@@ -19,14 +19,14 @@ class GetMatchResultsHandler(val getMatchResultsUseCase: GetMatchResultsUseCase)
 
     suspend fun PipelineContext<Unit, ApplicationCall>.getMatchResults(){
         val idMatchCandidate = call.request.queryParameters["matchId"]!!.toIntOrNull()
-        val roundIndexCandidate = call.request.queryParameters["round"]!!.toInt()
-        if (idMatchCandidate == null || roundIndexCandidate == null)
+
+        if (idMatchCandidate == null)
         {
             call.respond(HttpStatusCode.BadRequest, "idMatch & roundIndex are needed")
         }
         else
         {
-            val matchResultsDTO = getMatchResultsUseCase(idMatchCandidate,roundIndexCandidate)
+            val matchResultsDTO = getMatchResultsUseCase(idMatchCandidate)
 
 
             call.respond(matchResultsDTO)
