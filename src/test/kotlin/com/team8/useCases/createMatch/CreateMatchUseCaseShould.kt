@@ -1,4 +1,4 @@
-package com.team8.createMatch
+package com.team8.useCases.createMatch
 
 
 import com.team8.match.domain.Match
@@ -19,17 +19,10 @@ class CreateMatchUseCaseShould {
 
     private lateinit var resultMatch: Match
     companion object {
-
-        @JvmStatic
         private lateinit var challenger : String
-        @JvmStatic
         private lateinit var opponent : String
-        @JvmStatic
         private lateinit var matchmakingService: IMakeMatchService
-
-        @JvmStatic
         private lateinit var matchRepository: IMatchRepository
-        @JvmStatic
         private lateinit var createMatchUseCase: CreateMatchUseCase
 
 
@@ -38,7 +31,7 @@ class CreateMatchUseCaseShould {
         fun `Setup`() = runTest{
             // Arrange
             challenger = "Ricardo"
-            opponent = "\"Theo\""
+            opponent = "Theo"
             matchmakingService = mock()
             matchRepository = mock()
             whenever(matchmakingService.GetOpponent(challenger)).thenReturn(opponent)
@@ -55,14 +48,14 @@ class CreateMatchUseCaseShould {
         assertEquals(challenger, resultMatch.challenger)
     }
 
-    /*@Test
+    @Test
     fun `return opponent name inside match`() = runTest{
         // Act
         CreateMatch()
 
         // Assert
         assertEquals(opponent, resultMatch.opponent)
-    }*/
+    }
 
     @Test
     fun `return Match when is request CreateMatch`() = runTest{

@@ -1,4 +1,4 @@
-package com.team8.createMatch
+package com.team8.useCases.createMatch
 
 import com.team8.match.domain.Match
 import com.team8.match.domain.Parsers.MatchParser
