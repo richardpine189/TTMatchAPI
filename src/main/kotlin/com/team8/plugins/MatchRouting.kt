@@ -33,6 +33,11 @@ fun Application.matchRouting() {
     reMatch.routing(this)
 
     routing {
+
+        get("/") {
+            call.respondText("matchAPI is running!!!")
+        }
+
         route("testGet") {
             get {
                 call.respond(matchList)
