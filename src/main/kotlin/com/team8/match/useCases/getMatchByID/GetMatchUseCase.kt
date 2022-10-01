@@ -1,6 +1,7 @@
 package com.team8.match.useCases.getMatchByID
 
 import com.team8.match.domain.DTO.ActiveMatchDTO
+import com.team8.match.domain.Parsers.MatchParser
 import com.team8.match.repository.IMatchRepository
 
 class GetMatchUseCase(val matchRespository : IMatchRepository) : IGetMatchUseCase {
@@ -9,14 +10,7 @@ class GetMatchUseCase(val matchRespository : IMatchRepository) : IGetMatchUseCas
     {
         val match = matchRespository.getMatch(matchId)
 
-        val activeMatchDTO = ActiveMatchDTO(
-            match.challenger,
-            match.opponent,
-            match.currentRound,
-            match.rounds[match.currentRound].letter,
-            match.rounds[match.currentRound].timeLeft,
-            match.rounds[match.currentRound].categoryNames,
-        )
+        val activeMatchDTO = MatchParser.toActiveMatchDto(match)
 
         return activeMatchDTO
     }
