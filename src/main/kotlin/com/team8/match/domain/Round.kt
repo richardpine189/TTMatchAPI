@@ -11,8 +11,8 @@ class Round() {
     var opponentAnswers : Array<String> = Array(5) {""}
     var challengerResults : Array<Boolean> = Array(5){ false }
     var opponentResults : Array<Boolean> = Array(5){ false }
-    var letter : Char? = null
-    var timeLeft : Int? = null
+    var letter : Char = '!'
+    var timeLeft : Int = 60
     var winner : WinnerStatus = WinnerStatus.Unassigned
 
     fun updateRoundStatus() {

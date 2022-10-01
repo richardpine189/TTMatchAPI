@@ -13,8 +13,8 @@ class GetMatchUseCase(val matchRespository : IMatchRepository) : IGetMatchUseCas
             match.challenger,
             match.opponent,
             match.currentRound,
-            match.rounds[match.currentRound].letter!!,
-            match.rounds[match.currentRound].timeLeft!!,
+            match.rounds[match.currentRound].letter,
+            match.rounds[match.currentRound].timeLeft,
             match.rounds[match.currentRound].categoryNames,
         )
 

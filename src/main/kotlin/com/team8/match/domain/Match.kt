@@ -40,8 +40,12 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
 
     fun setLetter(letter : Char)
     {
-        println(letter)
-        if(rounds[currentRound].letter == null)
+        /*if(rounds[currentRound].letter == null)
+        {
+            rounds[currentRound].letter = letter
+        }*/
+
+        if(rounds[currentRound].roundStatus == RoundStatus.NotStarted)
         {
             rounds[currentRound].letter = letter
         }
@@ -49,8 +53,11 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
 
     fun setTimeLeft(timeLeft : Int)
     {
-        println(timeLeft)
-        if(rounds[currentRound].timeLeft == null)
+        /*if(rounds[currentRound].timeLeft == null)
+        {
+            rounds[currentRound].timeLeft = timeLeft
+        }*/
+        if(rounds[currentRound].roundStatus == RoundStatus.NotStarted)
         {
             rounds[currentRound].timeLeft = timeLeft
         }
