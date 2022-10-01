@@ -9,21 +9,21 @@ import com.team8.match.useCases.updateMatch.service.ISetVictoryService
 
 class UpdateMatchUseCase(private val repository: IMatchRepository, private val service: ISetVictoryService) :
     IUpdateMatchUseCase {
-    override suspend operator fun invoke(round: RoundDTO) : Boolean
+    override suspend operator fun invoke(roundDTO: RoundDTO) : Boolean
     {
         //obtener match
-        val match = repository.getMatch(round.id)
+        val match = repository.getMatch(roundDTO.idMatch)
 
         //setearle cambios
-        match.setCategories(round.categories)
+        match.setCategories(roundDTO.categories)
 
-        match.setAnswers(round.answers)
+        match.setAnswers(roundDTO.answers)
 
-        match.setResults(round.results)
+        match.setResults(roundDTO.results)
 
-        match.setLetter(round.letter)
+        match.setLetter(roundDTO.letter)
 
-        match.setTimeLeft(round.timeLeft)
+        match.setTimeLeft(roundDTO.timeLeft)
 
         match.endTurn()
 
@@ -33,14 +33,14 @@ class UpdateMatchUseCase(private val repository: IMatchRepository, private val s
         if(match.winner != WinnerStatus.Unassigned)
         {
             //MATCHSERVICE ->USER
-            CallVictoryService(match)
+            callVictoryService(match)
             return true;
         }
 
         return match.rounds[match.currentRound].roundStatus != RoundStatus.Unfinished
     }
 
-    private suspend fun CallVictoryService(match: Match)
+    private suspend fun callVictoryService(match: Match)
     {
         if(match.winner == WinnerStatus.Challenger)
             service.setVictory(match.challenger)

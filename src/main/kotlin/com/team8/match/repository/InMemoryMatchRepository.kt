@@ -9,10 +9,11 @@ class InMemoryMatchRepository(localRepositoryPath : String) : IMatchRepository {
     /*
     Match("Theo", "Ricardo", 1),
     Match("Romina", "Ricardo", 2)*/
+    val NEW_MATCH = -1
     override fun saveMatch(match : Match) {
         val index = matchList.indexOfFirst { it.id == match.id }
 
-        if(index > -1)
+        if(index > NEW_MATCH)
         {
             matchList[index] = match
         }

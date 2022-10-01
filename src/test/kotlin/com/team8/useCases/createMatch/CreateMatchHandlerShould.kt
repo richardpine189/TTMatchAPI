@@ -17,6 +17,8 @@ import kotlinx.serialization.json.Json
 import org.junit.Test
 
 class CreateMatchHandlerShould {
+
+    val applications : Application = Application(createTestEnvironment())
     @Test
     fun `return a match when a new match is requested`() : Unit = withTestApplication{
 
@@ -41,7 +43,7 @@ class CreateMatchHandlerShould {
 
     @Test
     fun `return Bad Request when no userName is sent`() : Unit = withTestApplication {
-        installSerialization()
+        //installSerialization()
 
         val createMatchUseCase : ICreateMatchUseCase = mockk()
         val handler = CreateMatchHandler(createMatchUseCase)
@@ -54,7 +56,7 @@ class CreateMatchHandlerShould {
 
     @Test
     fun `return NotFound when the user services is down`() : Unit = withTestApplication {
-        installSerialization()
+        //installSerialization()
 
         val createMatchUseCase : ICreateMatchUseCase = mockk()
         val handler = CreateMatchHandler(createMatchUseCase)
@@ -65,7 +67,7 @@ class CreateMatchHandlerShould {
         }
     }
 
-    private fun TestApplicationEngine.installSerialization() {
+   private fun TestApplicationEngine.installSerialization() {
         application.install(ContentNegotiation) {
             json(
                 Json{

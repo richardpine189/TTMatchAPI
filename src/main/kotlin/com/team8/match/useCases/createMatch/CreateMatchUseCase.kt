@@ -14,6 +14,7 @@ class CreateMatchUseCase(private val matchmakingService: IMakeMatchService, priv
         val opponent = matchmakingService.GetOpponent(challenger)
 
         val match = Match(challenger, opponent)
+
         matchRepository.saveMatch(match)
 
         return match
