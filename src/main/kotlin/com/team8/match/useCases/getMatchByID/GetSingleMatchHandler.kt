@@ -27,8 +27,14 @@ class GetSingleMatchHandler(val getMatchUseCase : IGetMatchUseCase) : IHandler {
         }
         else
         {
-            val activeMatchDTO = getMatchUseCase(matchIdCandidate)
-            call.respond(activeMatchDTO)
+            try {
+                val activeMatchDTO = getMatchUseCase(matchIdCandidate)
+                call.respond(activeMatchDTO)
+            }
+            catch (ex: Exception)
+            {
+                call.respond(HttpStatusCode.BadRequest, ex.message!!)
+            }
         }
     }
 

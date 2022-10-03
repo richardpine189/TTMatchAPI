@@ -8,10 +8,13 @@ class GetMatchUseCase(val matchRespository : IMatchRepository) : IGetMatchUseCas
 
     override suspend fun invoke(matchId : Int) : ActiveMatchDTO
     {
-        val match = matchRespository.getMatch(matchId)
+        if(matchId == -1)
+            throw Exception("The MatchID must be grater than zero")
+        else {
+            val match = matchRespository.getMatch(matchId)
+            val activeMatchDTO = MatchParser.toActiveMatchDto(match)
+            return activeMatchDTO
+        }
 
-        val activeMatchDTO = MatchParser.toActiveMatchDto(match)
-
-        return activeMatchDTO
     }
 }

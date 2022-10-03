@@ -1,10 +1,13 @@
 package com.team8.match.domain.DTO
 
-@kotlinx.serialization.Serializable
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class RoundDTO(
     val idMatch : Int,
     val categories : Array<String>,
     val answers : Array<String>,
     val results : Array<Boolean>,
-    val letter : Char, val timeLeft:Int
+    val letter : Char,
+    val timeLeft:Int
     )

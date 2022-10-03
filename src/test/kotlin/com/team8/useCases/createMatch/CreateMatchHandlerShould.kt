@@ -18,7 +18,6 @@ import org.junit.Test
 
 class CreateMatchHandlerShould {
 
-    val applications : Application = Application(createTestEnvironment())
     @Test
     fun `return a match when a new match is requested`() : Unit = withTestApplication{
 
@@ -36,6 +35,7 @@ class CreateMatchHandlerShould {
         handler.routing(application)
 
         handleRequest(HttpMethod.Get, "/newMatch?challengerUserName=${user}").apply {
+
             assertEquals(HttpStatusCode.OK, response.status())
             assertEquals(Json.encodeToString(matchDto), response.content)
         }
