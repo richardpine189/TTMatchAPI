@@ -1,5 +1,6 @@
 package com.team8.useCases.getMatchByID
 
+import com.team8.match.domain.DTO.ActiveMatchDTO
 import com.team8.match.domain.Match
 import com.team8.match.domain.Parsers.MatchParser
 import com.team8.match.useCases.createMatch.CreateMatchHandler
@@ -17,27 +18,31 @@ import junit.framework.TestCase
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.Test
+import kotlin.test.BeforeTest
 
 internal class GetSingleMatchHandlerShould
 {
+    lateinit var activeMatchDto : ActiveMatchDTO
+    lateinit var getMatch : IGetMatchUseCase
+
+    @BeforeTest
+    fun initialize() : Unit = withTestApplication{
+        val match = Match("Ricardo", "test", 5)
+        activeMatchDto = MatchParser.toActiveMatchDto(match)
+
+        getMatch = mockk()
+        coEvery { getMatch(5) } returns activeMatchDto
+        coEvery { getMatch(-1) } throws Exception("ID can't be less than zero")
+    }
+
     @Test
     fun `return an activeMatch when a matchID is sent`() : Unit = withTestApplication{
 
         installSerialization()
-
-        val user = "Ricardo"
-        val matchID = 0;
-
-        val match = Match(user, "test", matchID)
-        val activeMatchDto = MatchParser.toActiveMatchDto(match)
-
-        val getMatch : IGetMatchUseCase = mockk()
-        coEvery { getMatch(matchID) } returns activeMatchDto
         val handler = GetSingleMatchHandler(getMatch)
         handler.routing(application)
 
-        handleRequest(HttpMethod.Get, "/GetMatchById/${matchID}").apply {
-
+        handleRequest(HttpMethod.Get, "/GetMatchById/${5}").apply {
             TestCase.assertEquals(HttpStatusCode.OK, response.status())
             TestCase.assertEquals(Json.encodeToString(activeMatchDto), response.content)
         }
@@ -47,33 +52,27 @@ internal class GetSingleMatchHandlerShould
     fun `return Bad Request when no matchID is sent`() : Unit = withTestApplication {
 
         installSerialization()
-        val matchID : Int? = null
-        val getMatch : IGetMatchUseCase = mockk()
         val handler = GetSingleMatchHandler(getMatch)
         handler.routing(application)
 
-        handleRequest(HttpMethod.Get, "/GetMatchById/${matchID}").apply {
+        val requestMatchId : Int? = null
+
+        handleRequest(HttpMethod.Get, "/GetMatchById/${requestMatchId}").apply {
             TestCase.assertEquals(HttpStatusCode.BadRequest, response.status())
         }
     }
 
     @Test
     fun `return a Bad Request when matchId es less than zero`() : Unit = withTestApplication {
+
         installSerialization()
-
-        val matchID : Int = 5
-        val getMatch : IGetMatchUseCase = mockk()
         val handler = GetSingleMatchHandler(getMatch)
-
         handler.routing(application)
 
-        coEvery { getMatch(0 - matchID) } throws Exception("msg")
-
-        handleRequest(HttpMethod.Get, "/GetMatchById/${matchID}").apply {
+        handleRequest(HttpMethod.Get, "/GetMatchById/${-1}").apply {
             TestCase.assertEquals(HttpStatusCode.BadRequest, response.status())
         }
     }
-
 
     private fun TestApplicationEngine.installSerialization() {
         application.install(ContentNegotiation) {

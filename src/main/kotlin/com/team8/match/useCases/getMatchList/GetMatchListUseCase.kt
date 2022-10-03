@@ -3,6 +3,7 @@ package com.team8.match.useCases.getMatchList
 import com.team8.match.repository.IMatchRepository
 import com.team8.match.domain.MatchTurn
 import com.team8.match.domain.DTO.OnGoingMatchDTO
+import com.team8.match.domain.Parsers.MatchParser
 import com.team8.match.domain.RoundStatus
 
 class GetMatchListUseCase(val matchRespository: IMatchRepository) : IGetMatchListUseCase {
@@ -15,17 +16,10 @@ class GetMatchListUseCase(val matchRespository: IMatchRepository) : IGetMatchLis
 
         matchList.forEach{
             listOnGoingMatchDTO.add(
-                OnGoingMatchDTO(
-                    it.id,
-                    it.challenger,
-                    it.opponent,
-                    it.currentRound,
-                    (it.matchTurn == MatchTurn.Challenger),
-                    it.currentRound == it.rounds.size - 1 && it.rounds[it.currentRound].roundStatus == RoundStatus.Finished,
-                    arrayOf(it.rounds[0].winner, it.rounds[1].winner, it.rounds[2].winner)
-                )
+                MatchParser.toOngoingMatchDto(it)
             )
         }
+
         return listOnGoingMatchDTO
     }
 }

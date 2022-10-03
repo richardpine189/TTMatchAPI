@@ -3,6 +3,9 @@ package com.team8.match.domain.Parsers
 import com.team8.match.domain.DTO.ActiveMatchDTO
 import com.team8.match.domain.Match
 import com.team8.match.domain.DTO.MatchDTO
+import com.team8.match.domain.DTO.OnGoingMatchDTO
+import com.team8.match.domain.MatchTurn
+import com.team8.match.domain.RoundStatus
 import com.team8.match.domain.WinnerStatus
 
 object MatchParser {
@@ -25,5 +28,20 @@ object MatchParser {
             match.rounds[match.currentRound].categoryNames,
         )
         return activeMatchDTO
+    }
+
+    fun toOngoingMatchDto(match: Match) : OnGoingMatchDTO
+    {
+        val onGoingMatchDto = OnGoingMatchDTO(
+            match.id,
+            match.challenger,
+            match.opponent,
+            match.currentRound,
+            (match.matchTurn == MatchTurn.Challenger),
+            match.winner != WinnerStatus.Unassigned,
+            arrayOf(match.rounds[0].winner, match.rounds[1].winner, match.rounds[2].winner)
+        )
+
+        return onGoingMatchDto
     }
 }

@@ -7,7 +7,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.util.pipeline.*
 
-class GetMatchListHandler(val getMatcheListUseCase : IGetMatchListUseCase) : IHandler {
+class GetMatchListHandler(val getMatchListUseCase : IGetMatchListUseCase) : IHandler {
 
     override fun routing(a: Application) {
         a.routing {
@@ -26,7 +26,7 @@ class GetMatchListHandler(val getMatcheListUseCase : IGetMatchListUseCase) : IHa
         }
         else
         {
-            val listMatchDTO = getMatcheListUseCase(candidate)
+            val listMatchDTO = getMatchListUseCase(candidate)
             call.respond(listMatchDTO)
         }
     }
