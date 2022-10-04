@@ -57,10 +57,14 @@ internal class GetMatchListHandlerShould
 
     @Test
     fun `bad request when no userName`() : Unit = withTestApplication {
-        val userName = null
+        installSerialization()
+        val getMatchList : IGetMatchListUseCase = mockk()
+        val handler = GetMatchListHandler(getMatchList)
+        handler.routing(application)
+        val userName = ""
 
         // Act
-        handleRequest(HttpMethod.Get, "/getMatches?userName=${userName}").apply{
+        handleRequest(HttpMethod.Get, "/getMatches?userName=").apply{
             // Assert
             TestCase.assertEquals(HttpStatusCode.BadRequest, response.status())
         }

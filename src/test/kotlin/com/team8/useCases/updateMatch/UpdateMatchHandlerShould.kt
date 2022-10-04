@@ -9,6 +9,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.testing.*
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
@@ -17,6 +18,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 import org.junit.Test
+import org.mockito.kotlin.argumentCaptor
 
 internal class UpdateMatchHandlerShould
 {
@@ -38,8 +40,11 @@ internal class UpdateMatchHandlerShould
             )
         val roundEncoded = Json.encodeToString(roundDto)
         val updateMatchUseCase: IUpdateMatchUseCase = mockk()
-
-        coEvery { updateMatchUseCase(roundDto) } returns booleanReturn
+        /*
+        coEvery {
+            updateMatchUseCase(roundDto)
+        } returns booleanReturn
+        */
 
         val handler = UpdateMatchHandler(updateMatchUseCase)
         handler.routing(application)
@@ -51,12 +56,12 @@ internal class UpdateMatchHandlerShould
         runBlocking {
             println(updateMatchUseCase(roundDto))
 
-            println(updateMatchUseCase(Json.decodeFromString<RoundDTO>(roundEncoded)))
+            //println(updateMatchUseCase(Json.decodeFromString<RoundDTO>(roundEncoded)))
         }
 
 
-/*
-        handleRequest(HttpMethod.Post, "/updateMatch"){setBody(roundEncoded)}.apply {
+
+       /* handleRequest(HttpMethod.Post, "/updateMatch", ){setBody(roundEncoded)}.apply {
 
             TestCase.assertEquals(HttpStatusCode.OK, response.status())
 
