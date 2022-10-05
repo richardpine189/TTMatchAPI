@@ -4,22 +4,23 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 class MatchmakingService(val PATH : String) : IMakeMatchService {
     override suspend fun GetOpponent(challengerId : String) : String {
         val client = HttpClient()
-        var response : HttpResponse
 
-        try{
-            response = client.get("$PATH/getOpponent/$challengerId")
-            val opponent = Json.decodeFromString<String>(response.body())
-            return opponent
+        var response : HttpResponse = client.get("$PATH/getOpponent/$challengerId")
+
+        if(response.status == HttpStatusCode.NotFound)
+        {
+            throw Exception("User service not available.")
         }
-        catch (ex : Exception){
-            throw Exception("The service is not available")
-        }
+
+        val opponent = Json.decodeFromString<String>(response.body())
+        return opponent
     }
 }
 

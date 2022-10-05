@@ -134,9 +134,7 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
     }
 
     fun matchHasWinner(): Boolean {
-
-            return winner != WinnerStatus.Unassigned
-
+        return winner != WinnerStatus.Unassigned
     }
 
     fun roundHasEnded(): Boolean {
