@@ -5,9 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RoundDTO(
     val idMatch : Int,
-    val categories : Array<String>,
-    val answers : Array<String>,
-    val results : Array<Boolean>,
+    val categories : List<String>,
+    val answers : List<String>,
+    val results : List<Boolean>,
     val letter : Char,
     val timeLeft:Int
-    )
+)

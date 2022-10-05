@@ -23,7 +23,7 @@ class matchmakingServiceShould {
         assertNotNull(opponent)
     }
 
-    //TODO: Como simular una API CAIDA?
+    // TODO: Como simular una API CAIDA?
     @Test
     fun `throw an Exception when the services is not avalible`() = runTest{
 

@@ -11,5 +11,5 @@ data class MatchDTO(
     val currentRound : Int,
     val isChallengerTurn : Boolean,
     val isMatchFinished : Boolean,
-    val roundResults : Array<WinnerStatus>
+    val roundResults :Array<WinnerStatus>
 )

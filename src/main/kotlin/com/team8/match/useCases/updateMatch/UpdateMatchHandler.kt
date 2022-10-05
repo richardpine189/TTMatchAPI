@@ -7,8 +7,10 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.util.pipeline.*
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+
 
 class UpdateMatchHandler(val updateMatchUseCase : IUpdateMatchUseCase) : IHandler {
 
@@ -22,7 +24,16 @@ class UpdateMatchHandler(val updateMatchUseCase : IUpdateMatchUseCase) : IHandle
 
     suspend fun PipelineContext<Unit, ApplicationCall>.updateMatch(){
         val parameters = call.receiveText()
-        val roundDTO = Json.decodeFromString<RoundDTO>(parameters)
-        call.respond(HttpStatusCode.OK, updateMatchUseCase(roundDTO))
+
+        try{
+            val roundDTO = Json.decodeFromString<RoundDTO>(parameters)
+            val playerContinueMatch = updateMatchUseCase(roundDTO)
+            call.respond(HttpStatusCode.OK, playerContinueMatch)
+        }
+        catch (ex : SerializationException){
+            call.respond(HttpStatusCode.BadRequest, message = "No RoundDTO detected")
+        }
+
+
     }
 }

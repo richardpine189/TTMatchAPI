@@ -27,9 +27,16 @@ class CreateMatchHandler(val CreateMatchUseCase : ICreateMatchUseCase) : IHandle
         }
         else
         {
-            val match = CreateMatchUseCase(idParameter)
-            val matchDto = MatchParser.toDto(match)
-            call.respond(matchDto)
+            try {
+                val match = CreateMatchUseCase(idParameter)
+                val matchDto = MatchParser.toDto(match)
+                call.respond(matchDto)
+            }
+            catch (ex: Exception)
+            {
+                call.respond(HttpStatusCode.NotFound, "The services is not available")
+            }
+
         }
     }
 

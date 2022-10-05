@@ -11,10 +11,15 @@ import com.team8.match.domain.WinnerStatus
 object MatchParser {
     fun toDto(match : Match) : MatchDTO
     {
-        return MatchDTO(match.id, match.challenger, match.opponent, match.currentRound,true, false, arrayOf(
-            WinnerStatus.Unassigned,
-            WinnerStatus.Unassigned,
-            WinnerStatus.Unassigned))
+        return MatchDTO(
+            match.id,
+            match.challenger,
+            match.opponent,
+            match.currentRound,
+            true,
+            false,
+            arrayOf(WinnerStatus.Unassigned,WinnerStatus.Unassigned,WinnerStatus.Unassigned))
+            //arrayOf( match.rounds[0].winner,match.rounds[1].winner,match.rounds[2].winner)
     }
 
     fun toActiveMatchDto(match: Match) : ActiveMatchDTO
@@ -38,7 +43,7 @@ object MatchParser {
             match.opponent,
             match.currentRound,
             (match.matchTurn == MatchTurn.Challenger),
-            match.winner != WinnerStatus.Unassigned,
+            match.matchHasWinner(), //match.winner != WinnerStatus.Unassigned,
             arrayOf(match.rounds[0].winner, match.rounds[1].winner, match.rounds[2].winner)
         )
 

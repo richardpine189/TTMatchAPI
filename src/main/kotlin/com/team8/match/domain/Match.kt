@@ -1,5 +1,6 @@
 package com.team8.match.domain
 
+import com.team8.match.domain.DTO.RoundDTO
 import kotlinx.serialization.Serializable
 
 
@@ -15,7 +16,10 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
     // Estos tres métodos públicos (setCategories, setResults y setAnswers) deberían ser privados y ser llamados desde un método único que reciba un RoundDTO
     // aparte de llamar él a updateRoundStatus
     fun setCategories(categories : Array<String>) {
-        rounds[currentRound].categoryNames = categories
+
+        if(rounds[currentRound].roundStatus == RoundStatus.NotStarted) {
+            rounds[currentRound].categoryNames = categories
+        }
     }
     fun setAnswers(answers: Array<String>) {
         if (matchTurn == MatchTurn.Challenger)
@@ -111,6 +115,32 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
         {
             winner = WinnerStatus.Draw
         }
+    }
+
+    fun updateMatch(roundDTO : RoundDTO)
+    {
+        //setearle cambios
+        setCategories(roundDTO.categories.toTypedArray())
+
+        setAnswers(roundDTO.answers.toTypedArray())
+
+        setResults(roundDTO.results.toTypedArray())
+
+        setLetter(roundDTO.letter)
+
+        setTimeLeft(roundDTO.timeLeft)
+
+        endTurn()
+    }
+
+    fun matchHasWinner(): Boolean {
+
+            return winner != WinnerStatus.Unassigned
+
+    }
+
+    fun roundHasEnded(): Boolean {
+        return rounds[currentRound].roundStatus != RoundStatus.Unfinished
     }
 }
 
