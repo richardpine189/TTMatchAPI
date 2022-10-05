@@ -34,8 +34,7 @@ internal class UpdateMatchUseCaseShould
     lateinit var updateMatchUseCase : UpdateMatchUseCase
 
     @BeforeTest
-    fun initialize()
-    {
+    fun initialize() = runTest {
         updateMatchUseCase = UpdateMatchUseCase(repository, service)
 
         every { match.updateMatch(roundDto)} returns Unit
@@ -47,8 +46,8 @@ internal class UpdateMatchUseCaseShould
 
         coEvery { service.setVictory(any()) } returns Unit
 
-        every { repository.getMatch(matchId) } returns match
-        every { repository.saveMatch(match) } returns Unit
+        coEvery { repository.getMatch(matchId) } returns match
+        coEvery { repository.saveMatch(match) } returns Unit
     }
 
     @Test
@@ -57,7 +56,7 @@ internal class UpdateMatchUseCaseShould
         updateMatchUseCase(roundDto)
 
         // Assert
-        verify{repository.getMatch(matchId)}
+        coVerify{repository.getMatch(matchId)}
     }
 
     @Test
@@ -75,7 +74,7 @@ internal class UpdateMatchUseCaseShould
         updateMatchUseCase(roundDto)
 
         // Assert
-        verify{repository.saveMatch(match)}
+        coVerify{repository.saveMatch(match)}
     }
 
     @Test

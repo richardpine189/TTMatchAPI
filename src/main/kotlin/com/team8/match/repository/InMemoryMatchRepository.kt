@@ -10,7 +10,7 @@ class InMemoryMatchRepository(localRepositoryPath : String) : IMatchRepository {
     Match("Theo", "Ricardo", 1),
     Match("Romina", "Ricardo", 2)*/
     val NEW_MATCH = -1
-    override fun saveMatch(match : Match) {
+    override suspend fun saveMatch(match : Match) {
         val index = matchList.indexOfFirst { it.id == match.id }
 
         if(index > NEW_MATCH)
@@ -24,11 +24,11 @@ class InMemoryMatchRepository(localRepositoryPath : String) : IMatchRepository {
         }
     }
 
-    override fun getMatch(id : Int) : Match {
+    override suspend fun getMatch(id : Int) : Match {
         return matchList.first{ it.id == id }
     }
 
-    override fun getMatchListByUserId(userId : String) : List<Match> {
+    override suspend fun getMatchListByUserId(userId : String) : List<Match> {
         return matchList.filter { it.challenger == userId || it.opponent == userId }
     }
 

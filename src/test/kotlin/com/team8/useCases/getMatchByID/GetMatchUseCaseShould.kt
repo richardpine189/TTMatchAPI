@@ -48,8 +48,7 @@ internal class GetMatchUseCaseShould
         }
     }
 
-    private fun declareMatchToRequest()
-    {
+    private fun declareMatchToRequest() = runTest {
         val match = Match("Challenger", "Opponent")
         whenever(matchRepository.getMatch(matchID)).thenReturn(match)
     }

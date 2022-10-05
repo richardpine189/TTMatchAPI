@@ -18,7 +18,8 @@ class GetMatchResultsHandler(val getMatchResultsUseCase: GetMatchResultsUseCase)
     }
 
     suspend fun PipelineContext<Unit, ApplicationCall>.getMatchResults(){
-        val idMatchCandidate = call.request.queryParameters["matchId"]!!.toIntOrNull()
+//        val idMatchCandidate = call.request.queryParameters["matchId"]!!.toIntOrNull()
+        val idMatchCandidate = call.parameters["matchId"]!!.toInt()
 
         if (idMatchCandidate == null)
         {
@@ -27,7 +28,6 @@ class GetMatchResultsHandler(val getMatchResultsUseCase: GetMatchResultsUseCase)
         else
         {
             val matchResultsDTO = getMatchResultsUseCase(idMatchCandidate)
-
 
             call.respond(matchResultsDTO)
         }
