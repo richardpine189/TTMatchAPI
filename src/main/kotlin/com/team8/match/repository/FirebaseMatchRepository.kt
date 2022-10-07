@@ -64,9 +64,21 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
     private suspend fun GetNewId(): Int {
         val client = HttpClient()
 
-        var response : HttpResponse = client.get("$repositoryPath/matchesIndex.json")
+        var response : HttpResponse = client.get("$repositoryPath/matchesIndex/index.json")
+
 
         if(response.status == HttpStatusCode.NotFound)
+        {
+            throw Exception("Match database not available.")
+        }
+        var actualIndex: Int = response.body()
+        actualIndex++
+        var responseForUpdateIndex: HttpResponse = client.put("$repositoryPath/matchesIndex.json") {
+            contentType(ContentType.Application.Json)
+            setBody("{\"index\": ${actualIndex}}")
+        }
+
+        if(responseForUpdateIndex.status == HttpStatusCode.NotFound)
         {
             throw Exception("Match database not available.")
         }
