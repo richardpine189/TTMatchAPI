@@ -56,6 +56,11 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
             throw Exception("Match database not available.")
         }
 
+        if(response.bodyAsText() == "null")
+        {
+            return emptyList()
+        }
+
         val matchList = Json.decodeFromString<List<Match>>(response.body())
 
         return matchList
