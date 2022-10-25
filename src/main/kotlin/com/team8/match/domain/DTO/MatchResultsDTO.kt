@@ -10,5 +10,7 @@ data class MatchResultsDTO(
     val opponentAnswers : Array<String>,
     val challengerResults : Array<Boolean>,
     val opponentResults : Array<Boolean>,
+    val letter : Char,
+    val roundIndex : Int,
     val matchStatus: WinnerStatus
 )

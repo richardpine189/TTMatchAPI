@@ -10,7 +10,8 @@ class GetMatchResultsUseCase(val matchRepository: IMatchRepository) : IGetMatchR
 
         val match = matchRepository.getMatch(idMatch)
 
-        val round = match.rounds.last{it.roundStatus == RoundStatus.Finished}
+        val roundIndex = match.rounds.indexOfLast { it.roundStatus == RoundStatus.Finished }
+        val round = match.rounds[roundIndex]
 
         /*val matchResultsDTO = MatchResultsDTO(
             match.rounds[roundIndex].categoryNames,
@@ -26,6 +27,8 @@ class GetMatchResultsUseCase(val matchRepository: IMatchRepository) : IGetMatchR
             round.opponentAnswers,
             round.challengerResults,
             round.opponentResults,
+            round.letter,
+            roundIndex,
             match.winner
         )
 
