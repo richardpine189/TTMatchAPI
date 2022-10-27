@@ -32,4 +32,8 @@ class InMemoryMatchRepository(localRepositoryPath : String) : IMatchRepository {
         return matchList.filter { it.challenger == userId || it.opponent == userId }
     }
 
+    override suspend fun resetRepository() {
+        matchList = mutableListOf<Match>()
+    }
+
 }

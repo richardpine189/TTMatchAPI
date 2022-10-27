@@ -46,6 +46,32 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
         return matchList.filter { it.challenger == userId || it.opponent == userId }
     }
 
+    override suspend fun resetRepository() {
+        val client = HttpClient()
+
+        var responseForUpdateIndex: HttpResponse = client.put("$repositoryPath/matchesIndex.json") {
+            contentType(ContentType.Application.Json)
+            setBody("{\"index\": 0}")
+        }
+
+        if(responseForUpdateIndex.status == HttpStatusCode.NotFound)
+        {
+            throw Exception("Match database not available.")
+        }
+
+        var response: HttpResponse = client.put("$repositoryPath/matches.json") {
+            contentType(ContentType.Application.Json)
+            setBody("{}")
+        }
+
+        if(response.status == HttpStatusCode.NotFound)
+        {
+            throw Exception("Match database not available.")
+        }
+
+        return response.body()
+    }
+
     private suspend fun getAllMatches() : List<Match>{
         val client = HttpClient()
 
@@ -76,6 +102,7 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
         {
             throw Exception("Match database not available.")
         }
+
         var actualIndex: Int = response.body()
         actualIndex++
         var responseForUpdateIndex: HttpResponse = client.put("$repositoryPath/matchesIndex.json") {

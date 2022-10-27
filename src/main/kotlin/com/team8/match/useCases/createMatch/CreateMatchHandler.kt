@@ -39,6 +39,4 @@ class CreateMatchHandler(val CreateMatchUseCase : ICreateMatchUseCase) : IHandle
 
         }
     }
-
-
 }

@@ -8,4 +8,6 @@ interface IMatchRepository {
     suspend fun getMatch(id : Int) : Match
 
     suspend fun getMatchListByUserId(userId : String) : List<Match>
+
+    suspend fun resetRepository()
 }

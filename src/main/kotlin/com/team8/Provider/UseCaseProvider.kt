@@ -6,6 +6,7 @@ import com.team8.match.useCases.createMatch.CreateMatchUseCase
 import com.team8.match.useCases.getMatchByID.GetMatchUseCase
 import com.team8.match.useCases.getMatchList.GetMatchListUseCase
 import com.team8.match.useCases.requestReMatch.ReMatchUseCase
+import com.team8.match.useCases.resetMatchesHandler.ResetMatchesUseCase
 
 
 object UseCaseProvider {
@@ -32,5 +33,9 @@ object UseCaseProvider {
 
     val reMatch by lazy{
         ReMatchUseCase(RepositoryProvider.getRepository)
+    }
+
+    val resetMatches by lazy{
+        ResetMatchesUseCase(RepositoryProvider.getRepository)
     }
 }
