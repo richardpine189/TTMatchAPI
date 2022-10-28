@@ -1,6 +1,7 @@
 package com.team8.match.repository
 
 import com.team8.match.domain.Match
+import com.team8.match.useCases.exception.FireBaseDBNotAvailableException
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -11,11 +12,14 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
+
+    val NEW_MATCH_ID = -1
+
     override suspend fun saveMatch(match: Match) {
 
-        if(match.id == -1)
+        if(match.id == NEW_MATCH_ID)
         {
-            val newId = GetNewId()
+            val newId = getNewId()
             match.id = newId
         }
 
@@ -30,7 +34,7 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
 
         if(response.status == HttpStatusCode.NotFound)
         {
-            throw java.lang.Exception("The service is not available")
+            throw FireBaseDBNotAvailableException()
         }
     }
 
@@ -56,7 +60,7 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
 
         if(responseForUpdateIndex.status == HttpStatusCode.NotFound)
         {
-            throw Exception("Match database not available.")
+            throw FireBaseDBNotAvailableException()
         }
 
         var response: HttpResponse = client.put("$repositoryPath/matches.json") {
@@ -66,7 +70,7 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
 
         if(response.status == HttpStatusCode.NotFound)
         {
-            throw Exception("Match database not available.")
+            throw FireBaseDBNotAvailableException()
         }
 
         return response.body()
@@ -79,7 +83,7 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
 
         if(response.status == HttpStatusCode.NotFound)
         {
-            throw Exception("Match database not available.")
+            throw FireBaseDBNotAvailableException()
         }
 
         if(response.bodyAsText() == "null")
@@ -92,7 +96,7 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
         return matchList
     }
 
-    private suspend fun GetNewId(): Int {
+    private suspend fun getNewId(): Int {
         val client = HttpClient()
 
         var response : HttpResponse = client.get("$repositoryPath/matchesIndex/index.json")
@@ -100,7 +104,7 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
 
         if(response.status == HttpStatusCode.NotFound)
         {
-            throw Exception("Match database not available.")
+            throw FireBaseDBNotAvailableException()
         }
 
         var actualIndex: Int = response.body()
@@ -112,7 +116,7 @@ class FirebaseMatchRepository(val repositoryPath : String) : IMatchRepository {
 
         if(responseForUpdateIndex.status == HttpStatusCode.NotFound)
         {
-            throw Exception("Match database not available.")
+            throw FireBaseDBNotAvailableException()
         }
 
         return response.body()

@@ -1,5 +1,7 @@
 package com.team8.match.useCases.createMatch.service
 
+import com.team8.match.useCases.exception.ServerNotAvailableException
+import com.team8.match.useCases.exception.UserNotFoundException
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -16,7 +18,11 @@ class MatchmakingService(val PATH : String) : IMakeMatchService {
 
         if(response.status == HttpStatusCode.NotFound)
         {
-            throw Exception("User service not available.")
+            throw ServerNotAvailableException()
+        }
+        if(response.status == HttpStatusCode.NoContent)
+        {
+            throw UserNotFoundException()
         }
 
         val opponent = Json.decodeFromString<String>(response.body())

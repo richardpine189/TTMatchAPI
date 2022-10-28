@@ -19,7 +19,6 @@ object MatchParser {
             true,
             false,
             arrayOf(WinnerStatus.Unassigned,WinnerStatus.Unassigned,WinnerStatus.Unassigned))
-            //arrayOf( match.rounds[0].winner,match.rounds[1].winner,match.rounds[2].winner)
     }
 
     fun toActiveMatchDto(match: Match) : ActiveMatchDTO

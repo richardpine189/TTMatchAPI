@@ -11,6 +11,7 @@ class CreateMatchUseCase(private val matchmakingService: IMakeMatchService, priv
     ICreateMatchUseCase {
 
     override suspend operator fun invoke(challenger: String): Match {
+
         val opponent = matchmakingService.GetOpponent(challenger)
 
         val match = Match(challenger, opponent)

@@ -2,6 +2,9 @@ package com.team8.match.useCases.createMatch
 
 import com.team8.match.domain.Parsers.MatchParser
 import com.team8.match.interfaces.IHandler
+import com.team8.match.useCases.exception.FireBaseDBNotAvailableException
+import com.team8.match.useCases.exception.ServerNotAvailableException
+import com.team8.match.useCases.exception.UserNotFoundException
 import com.team8.plugins.matchList
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -32,9 +35,17 @@ class CreateMatchHandler(val CreateMatchUseCase : ICreateMatchUseCase) : IHandle
                 val matchDto = MatchParser.toDto(match)
                 call.respond(matchDto)
             }
-            catch (ex: Exception)
+            catch (ex: FireBaseDBNotAvailableException)
             {
-                call.respond(HttpStatusCode.NotFound, "The services is not available")
+                call.respond(HttpStatusCode.NotFound, ex.message.toString())
+            }
+            catch (ex: ServerNotAvailableException)
+            {
+                call.respond(HttpStatusCode.NotFound, ex.message.toString())
+            }
+            catch (ex: UserNotFoundException)
+            {
+                call.respond(HttpStatusCode.NotFound, ex.message.toString())
             }
 
         }
