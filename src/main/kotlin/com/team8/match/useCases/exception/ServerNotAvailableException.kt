@@ -1,4 +1,4 @@
 package com.team8.match.useCases.exception
 
-class ServerNotAvailableException : RuntimeException("User service not available.") {
+class ServerNotAvailableException : RuntimeException("El servicio de usuarios no está disponible.") {
 }
