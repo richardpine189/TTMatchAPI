@@ -20,7 +20,6 @@ class CreateMatchHandler(val CreateMatchUseCase : ICreateMatchUseCase) : IHandle
             }
         }
     }
-
     suspend fun PipelineContext<Unit, ApplicationCall>.createMatch(){
         val idParameter = call.request.queryParameters["challengerUserName"]
 
@@ -47,7 +46,6 @@ class CreateMatchHandler(val CreateMatchUseCase : ICreateMatchUseCase) : IHandle
             {
                 call.respond(HttpStatusCode.NotFound, ex.message.toString())
             }
-
         }
     }
 }

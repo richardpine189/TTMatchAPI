@@ -110,7 +110,6 @@ class Match(val challenger: String, val opponent: String, var id : Int = -1)
 
     fun updateMatch(roundDTO : RoundDTO)
     {
-        //setearle cambios
         setCategories(roundDTO.categories.toTypedArray())
 
         setAnswers(roundDTO.answers.toTypedArray())
